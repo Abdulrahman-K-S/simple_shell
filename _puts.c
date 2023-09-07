@@ -4,8 +4,6 @@
  * _puts - prints a string
  *
  * @s: string input
- *
- * Return: always 0
 */
 
 void _puts(char *s)
