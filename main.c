@@ -12,7 +12,6 @@ int main(int ac, char **argv)
 {
     char *lineptr;
     size_t n = 0;
-    ssize_t n_read;
 
     (void)ac; (void)argv;
 
@@ -22,8 +21,7 @@ int main(int ac, char **argv)
         _puts(PROMPT);
 
         /* Check if getline failed or CTRL+D was pressed */
-        n_read = getline(&lineptr, &n, stdin);
-        if (n_read == -1)
+        if (getline(&lineptr, &n, stdin) == -1)
             return (-1);
 
         _puts(lineptr);
