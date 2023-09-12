@@ -12,6 +12,7 @@ int main(int ac, char **argv)
 {
     char *lineptr;
     size_t n = 0;
+    int numOFtokens;
 
     (void)ac; (void)argv;
 
@@ -23,6 +24,8 @@ int main(int ac, char **argv)
         /* Check if getline failed or CTRL+D was pressed */
         if (getline(&lineptr, &n, stdin) == -1)
             return (-1);
+
+	numOFtokens = getNumberofTokens(lineptr);
 
         _puts(lineptr);
 
