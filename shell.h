@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* The printers for the shell */
 void _putchar(char c);
