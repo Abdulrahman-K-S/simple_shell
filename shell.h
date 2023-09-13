@@ -21,7 +21,7 @@ void _puts(char *s);
 
 /*   The input manipulators so the shell can understand */
 /*   what the user is typing                            */
-int getNumberofTokens(const char *lineptr);
+int getNumberofTokens(char *lineptr);
 
 /*             string_utils.c Modules                   */
 /*   The functions that manipulate the string to get    */
