@@ -9,12 +9,12 @@
  * Return: The number of words/tokens in @lineptr.
 */
 
-int getNumberofTokens(const char *lineptr)
+int getNumberofTokens(char *lineptr)
 {
 	int num_of_tokens = 0;
-	char *token, *lineptr_cpy = malloc(sizeof(char) * strlen(lineptr));
+	char *token, *lineptr_cpy = malloc(sizeof(char) * _strlen(lineptr));
 
-	strcpy(lineptr_cpy, lineptr);
+	_strcpy(lineptr_cpy, lineptr);
 
 	token = strtok(lineptr_cpy, DELIMETER);
 
