@@ -11,16 +11,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* printers.c Modules */
+/*                printers.c Modules                    */
 
-/* The printers for the shell */
+/*   The printers for the shell                         */
 void _putchar(char c);
 void _puts(char *s);
 
-/* input_parsing.c Modules */
+/*             input_parsing.c Modules                  */
 
-/* The input manipulators so the shell can understand */
-/*   what the user is typing */
+/*   The input manipulators so the shell can understand */
+/*   what the user is typing                            */
 int getNumberofTokens(const char *lineptr);
+
+/*             string_utils.c Modules                   */
+/*   The functions that manipulate the string to get    */
+/*   certain outputs from them                          */
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
 
 #endif
