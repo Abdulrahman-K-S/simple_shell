@@ -24,6 +24,8 @@ int getNumberofTokens(char *lineptr)
 	}
 	num_of_tokens++;
 
+	free(lineptr_cpy);
+
 	return (num_of_tokens);
 }
 
@@ -53,4 +55,6 @@ void storeTokens(char **argv, char *lineptr)
 	}
 
 	argv[i] = NULL;
+
+	free(lineptr_cpy);
 }
