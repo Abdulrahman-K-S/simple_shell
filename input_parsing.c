@@ -44,7 +44,7 @@ void storeTokens(char **argv, char *lineptr)
 
 	_strcpy(lineptr_cpy, lineptr);
 
-	token = strtok(lineptr_copy, DELIMETER);
+	token = strtok(lineptr_cpy, DELIMETER);
 
 	for (i = 0; token != NULL; i++)
 	{
