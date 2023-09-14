@@ -12,10 +12,9 @@ int main(int ac, char **argv)
 {
 	char *lineptr;
 	size_t n = 0;
-	int numOFtokens;
+	int numOFtokens, counter;
 
 	(void)ac;
-	(void)argv;
 
 	while (1)
 	{
@@ -30,9 +29,17 @@ int main(int ac, char **argv)
 
 		printf("The number of words got are: %d\n", numOFtokens);
 
-		_puts(lineptr);
+		argv = malloc(sizeof(char *) * numOFtokens);
+		storeTokens(argv, lineptr);
+
+		for (counter = 0; counter < numOFtokens - 1; counter++)
+		{
+			_puts(argv[counter]);
+			putchar('\n');
+		}
 
 		/* Frees the pointer after the operations are done for reuse */
+		free(argv);
 		free(lineptr);
 	}
 
