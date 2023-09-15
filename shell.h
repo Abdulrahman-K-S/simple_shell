@@ -4,6 +4,7 @@
 /* Defined vars */
 #define PROMPT "$ "
 #define DELIMETER " \n"
+#define ERROR "./shell: No such file or directory"
 
 /* The imported libraries */
 #include <unistd.h>
