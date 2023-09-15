@@ -39,6 +39,7 @@ int main(int ac, char **argv)
 		}
 
 		exec(argv);
+		
 		/* Frees the pointer after the operations are done for reuse */
 		free(argv);
 		free(lineptr);
