@@ -12,7 +12,7 @@ int main(int ac, char **argv)
 {
 	char *lineptr;
 	size_t n = 0;
-	int numOFtokens, counter;
+	int numOFtokens;
 
 	(void)ac;
 
@@ -23,23 +23,29 @@ int main(int ac, char **argv)
 
 		/* Check if getline failed or CTRL+D was pressed */
 		if (getline(&lineptr, &n, stdin) == -1)
+		{
+			_putchar('\n');
 			return (-1);
+		}
 
 		numOFtokens = getNumberofTokens(lineptr);
 
-		printf("The number of words got are: %d\n", numOFtokens);
+		/* Prints how many tokens are there */
+		/* printf("The number of words got are: %d\n", numOFtokens); */
 
 		argv = malloc(sizeof(char *) * numOFtokens);
 		storeTokens(argv, lineptr);
 
-		for (counter = 0; counter < numOFtokens - 1; counter++)
-		{
-			_puts(argv[counter]);
-			putchar('\n');
-		}
+		/* Prints the words stored */
+		/* for (counter = 0; counter < numOFtokens - 1; counter++)
+		 *{
+		 *	_puts(argv[counter]);
+		 *	putchar('\n');
+		 *}
+		*/
 
 		exec(argv);
-		
+
 		/* Frees the pointer after the operations are done for reuse */
 		free(argv);
 		free(lineptr);
