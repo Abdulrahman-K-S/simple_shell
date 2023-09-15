@@ -44,7 +44,8 @@ int main(int ac, char **argv)
 		 *}
 		*/
 
-		exec(argv);
+		if (exec(argv) == -1)
+			_puts(ERROR);
 
 		/* Frees the pointer after the operations are done for reuse */
 		free(argv);
