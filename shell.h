@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 /*                printers.c Modules                    */
 
@@ -29,5 +31,8 @@ void storeTokens(char **argv, char *lineptr);
 /*   certain outputs from them                          */
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
+
+/*   execution function   */
+int exec(char **argv);
 
 #endif
