@@ -42,3 +42,38 @@ char *_strcpy(char *dest, char *src)
 
 	return (dest);
 }
+
+/**
+ * _strcat - concatenates two strings
+ * @first: first string to be concatenated
+ * @second: second string to be concatenated
+ *
+ * Return: a string combining both strings
+*/
+char *_strcat(char *first, char *second)
+{
+    char *combined;
+    int i = 0 ,j = 0;
+
+    combined = malloc(sizeof(char *) * (_strlen(first) + _strlen(second)));
+
+	if (!combined)
+	{
+		return (NULL);
+	}
+
+    while (first[i])
+    {
+        combined[i] = first[i];
+        i++;
+    }
+    while (second[j])
+    {
+        combined[i] = second[j];
+        i++;
+        j++;
+    }
+    combined[i] ='\0';
+
+    return (combined);
+}

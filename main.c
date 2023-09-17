@@ -8,8 +8,9 @@
  *
  * Return: 1 indicating a success. -1 if there was an error.
 */
-int main(int ac, char **argv)
+int main(int ac, char **argv, char **env)
 {
+	char *command;
 	char *lineptr;
 	size_t n = 0;
 	int numOFtokens;
@@ -43,13 +44,21 @@ int main(int ac, char **argv)
 		 *	putchar('\n');
 		 *}
 		*/
+		command = path_finder(argv[0]);
+		if (command)
+			argv[0] = command;
+		else
+			_puts(ERROR);
 
-		if (exec(argv) == -1)
+		 printf("%s\n", command);	
+		 		
+		if (exec(argv, env) == -1)
 			_puts(ERROR);
 
 		/* Frees the pointer after the operations are done for reuse */
 		free(argv);
 		free(lineptr);
+		free(command);
 	}
 
 	return (1);
