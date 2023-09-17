@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * exec - executes the arguments through system call
- * execve
+ * exec - executes the arguments through system calls
+ * execve, fork and wait
  * @argv: arguments inserted
  * Return: 0 on success and -1 on failure
 */
-int exec(char **argv)
+int exec(char **argv, char **env)
 {
 	pid_t pid;
 	int status;
@@ -18,7 +18,7 @@ int exec(char **argv)
 	}
 	else if (pid == 0)
 	{
-		if (execve(argv[0], argv, NULL) == -1)
+		if (execve(argv[0], argv, env) == -1)
 		{
 			return (-1);
 		}
