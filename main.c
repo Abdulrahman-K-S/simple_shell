@@ -48,12 +48,15 @@ int main(int ac, char **argv, char **env)
 		if (command)
 			argv[0] = command;
 		else
+		{
 			_puts(ERROR);
-
+			continue;
+		}
 		 printf("%s\n", command);	
 		 		
 		if (exec(argv, env) == -1)
 			_puts(ERROR);
+
 
 		/* Frees the pointer after the operations are done for reuse */
 		free(argv);

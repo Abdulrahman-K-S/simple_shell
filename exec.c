@@ -27,5 +27,5 @@ int exec(char **argv, char **env)
 	{
 		wait(&status);
 	}
-	return (0);
+	return (1);
 }

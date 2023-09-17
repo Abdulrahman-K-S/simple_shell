@@ -55,7 +55,7 @@ char *_strcat(char *first, char *second)
     char *combined;
     int i = 0 ,j = 0;
 
-    combined = malloc(sizeof(char *) * (_strlen(first) + _strlen(second)));
+    combined = malloc(sizeof(char *) * (_strlen(first) + _strlen(second)) + 1);
 
 	if (!combined)
 	{
