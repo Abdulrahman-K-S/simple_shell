@@ -48,6 +48,7 @@ int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *first, char *second);
 char *_strdup(const char *String);
+int _strcmp(const char *First, const char *Second);
 
 /*                    path handlers                     */
 struct directories *path_parse(void);
