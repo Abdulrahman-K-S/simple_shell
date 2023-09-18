@@ -102,3 +102,25 @@ char *_strdup(const char *String)
 	str[i] = '\0';
 	return (str);
 }
+
+/**
+ * _strcmp - A function that compares two strings.
+ *
+ * @First: 1st string.
+ * @Second: 2nd string.
+ *
+ * Return: 0 if they're equal otherwise the difference between them.
+*/
+int _strcmp(const char *First, const char *Second)
+{
+	while ((*First != '\0' && *Second != '\0') && (*First == *Second))
+	{
+		First++;
+		Second++;
+	}
+
+	if (*First == '\0' && *Second == '\0')
+		return (0);
+	else
+		return ((int)(*First - *Second));
+}
