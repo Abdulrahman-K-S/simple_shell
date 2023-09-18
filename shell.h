@@ -16,13 +16,16 @@
 #include <sys/stat.h>
 
 /**
- * direcotories - a linked list storing all the
- * directories in the $PATH variable
+ * struct directories - a linked list storing all the
+ *                      directories in the $PATH variable.
+ *
+ * @dir: The string of the directory.
+ * @next: The node to the next directory.
 */
 struct directories
 {
-    char *dir;
-    struct directories *next;
+	char *dir;
+	struct directories *next;
 };
 
 /*                printers.c Modules                    */
@@ -44,6 +47,7 @@ void storeTokens(char **argv, char *lineptr);
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *first, char *second);
+char *_strdup(const char *String);
 
 /*                    path handlers                     */
 struct directories *path_parse(void);
