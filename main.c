@@ -5,6 +5,7 @@
  *
  * @ac: Number of comandline arguments.
  * @argv: Pointer to an array of command line arguments.
+ * @env: The enviroment variable.
  *
  * Return: 1 indicating a success. -1 if there was an error.
 */
@@ -13,7 +14,7 @@ int main(int ac, char **argv, char **env)
 	char *command;
 	char *lineptr;
 	size_t n = 0;
-	int numOFtokens;
+	int numOFtokens, i;
 
 	(void)ac;
 
@@ -31,21 +32,9 @@ int main(int ac, char **argv, char **env)
 
 		numOFtokens = getNumberofTokens(lineptr);
 
-		/* Prints how many tokens are there */
-		/* printf("The number of words got are: %d\n", numOFtokens); */
-
 		argv = malloc(sizeof(char *) * numOFtokens);
 		storeTokens(argv, lineptr);
 
-		/* Prints the words stored */
-		/* for (counter = 0; counter < numOFtokens - 1; counter++)
-		 *{
-		 *	_puts(argv[counter]);
-		 *	putchar('\n');
-		 *}
-		*/
-		/* checks if command in a directory in PATH */
-		/* if found changes argv[0] to full path*/
 		command = path_finder(argv[0]);
 		if (command)
 			argv[0] = command;
@@ -54,12 +43,19 @@ int main(int ac, char **argv, char **env)
 			_puts(ERROR);
 			continue;
 		}
-		 		
+
 		if (exec(argv, env) == -1)
 			_puts(ERROR);
 
 
 		/* Frees the pointer after the operations are done for reuse */
+		i = 0;
+		while (argv[i] != NULL)
+		{
+			if (argv[i])
+				free(argv[i]);
+			i++;
+		}
 		free(argv);
 		free(lineptr);
 		free(command);
