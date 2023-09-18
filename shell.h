@@ -51,6 +51,7 @@ char *_strdup(const char *String);
 int _strcmp(const char *First, const char *Second);
 
 /*                    path handlers                     */
+extern char **environ;
 struct directories *path_parse(void);
 char *path_finder(char *command);
 int free_list(struct directories *direcs);
