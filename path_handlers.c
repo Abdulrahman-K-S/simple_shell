@@ -19,10 +19,10 @@ struct directories *path_parse(void)
 
 	if (path == NULL)
 	{
-		return NULL;
+		return (NULL);
 	}
 
-	token = strtok(path,delimiter);
+	token = strtok(path, delimiter);
 
 	while (token != NULL)
 	{
@@ -48,16 +48,17 @@ struct directories *path_parse(void)
  *
  * Return: the full path if found or Null if not found
 */
-char *path_finder(char* command)
+char *path_finder(char *command)
 {
 	struct directories *head;
 	struct directories *direcs;
-	/*primary is the concatenation of the '/' character and the command given*/
+	/* primary is the concatenation of the '/' character */
+	/* and the command given */
 	char *primary;
 	char *full_directory;
 	struct stat st;
 
-	if(stat(command, &st) == 0)
+	if (stat(command, &st) == 0)
 		return (command);
 
 	direcs = path_parse();
@@ -65,7 +66,7 @@ char *path_finder(char* command)
 	while (direcs)
 	{
 		primary = _strcat("/", command);
-		full_directory =_strcat(direcs->dir ,primary);
+		full_directory = _strcat(direcs->dir, primary);
 
 		if (stat(full_directory, &st) == 0)
 		{
@@ -113,9 +114,9 @@ int free_list(struct directories *direcs)
 */
 char *_getenv(const char *name)
 {
-	extern char **environ;
 	int i = 0;
 	char *env_var = malloc(sizeof(char *) * 100);
+
 	if (!env_var)
 	{
 		return (NULL);
@@ -125,7 +126,7 @@ char *_getenv(const char *name)
 	{
 		env_var = _strdup(environ[i]);
 		env_var = strtok(env_var, "=");
-		if (strcmp(env_var, name) == 0)
+		if (_strcmp(env_var, name) == 0)
 		{
 			env_var = strtok(NULL, "=");
 			return (env_var);
@@ -134,5 +135,5 @@ char *_getenv(const char *name)
 			i++;
 	}
 	free(env_var);
-	return NULL;
+	return (NULL);
 }
