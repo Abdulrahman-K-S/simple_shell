@@ -35,17 +35,20 @@ int main(int ac, char **argv, char **env)
 		argv = malloc(sizeof(char *) * numOFtokens);
 		storeTokens(argv, lineptr);
 
-		command = path_finder(argv[0]);
-		if (command)
-			argv[0] = command;
-		else
+		if (is_built(argv, lineptr) == 1)
 		{
-			_puts(ERROR);
-			continue;
-		}
+			command = path_finder(argv[0]);
+			if (command)
+				argv[0] = command;
+			else
+			{
+				_puts(ERROR);
+				continue;
+			}
 
-		if (exec(argv, env) == -1)
-			_puts(ERROR);
+			if (exec(argv, env) == -1)
+				_puts(ERROR);
+		}
 	}
 
 	return (1);
