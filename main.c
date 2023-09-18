@@ -14,7 +14,7 @@ int main(int ac, char **argv, char **env)
 	char *command;
 	char *lineptr;
 	size_t n = 0;
-	int numOFtokens, i;
+	int numOFtokens;
 
 	(void)ac;
 
@@ -46,19 +46,6 @@ int main(int ac, char **argv, char **env)
 
 		if (exec(argv, env) == -1)
 			_puts(ERROR);
-
-
-		/* Frees the pointer after the operations are done for reuse */
-		i = 0;
-		while (argv[i] != NULL)
-		{
-			if (argv[i])
-				free(argv[i]);
-			i++;
-		}
-		free(argv);
-		free(lineptr);
-		free(command);
 	}
 
 	return (1);
