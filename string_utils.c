@@ -45,35 +45,60 @@ char *_strcpy(char *dest, char *src)
 
 /**
  * _strcat - concatenates two strings
- * @first: first string to be concatenated
- * @second: second string to be concatenated
+ * @f: first string to be concatenated
+ * @s: second string to be concatenated
  *
  * Return: a string combining both strings
 */
-char *_strcat(char *first, char *second)
+char *_strcat(char *f, char *s)
 {
-    char *combined;
-    int i = 0 ,j = 0;
+	char *combined;
+	int i = 0, j = 0;
 
-    combined = malloc(sizeof(char *) * (_strlen(first) + _strlen(second)) + 1);
-
+	combined = malloc(sizeof(char *) * (_strlen(f) + _strlen(s)) + 1);
 	if (!combined)
 	{
 		return (NULL);
 	}
 
-    while (first[i])
-    {
-        combined[i] = first[i];
-        i++;
-    }
-    while (second[j])
-    {
-        combined[i] = second[j];
-        i++;
-        j++;
-    }
-    combined[i] ='\0';
+	while (f[i])
+	{
+		combined[i] = f[i];
+		i++;
+	}
+	while (s[j])
+	{
+		combined[i] = s[j];
+		i++;
+		j++;
+	}
+	combined[i] = '\0';
 
-    return (combined);
+	return (combined);
+}
+
+/**
+ * _strdup - A function that duplicates the string parameter
+ *
+ * @String: The string to be duplicated.
+ *
+ * Return: A duplicate of the parameter.
+*/
+char *_strdup(const char *String)
+{
+	char *str;
+	int i = 0;
+
+	str = malloc(sizeof(char) * strlen(String) + 1);
+	if (!str)
+		return (NULL);
+
+	while (String[i])
+	{
+		str[i] = String[i];
+		i++;
+	}
+
+	str[i] = '\0';
+	return (str);
 }
