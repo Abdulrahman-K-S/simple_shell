@@ -80,7 +80,6 @@ char *path_finder(char* command)
         free_list(head);
         return (NULL);
     }
-    printf("%s\n", full_directory);
     free_list(head);
     return (full_directory);
 }

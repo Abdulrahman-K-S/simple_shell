@@ -44,6 +44,8 @@ int main(int ac, char **argv, char **env)
 		 *	putchar('\n');
 		 *}
 		*/
+		/* checks if command in a directory in PATH */
+		/* if found changes argv[0] to full path*/
 		command = path_finder(argv[0]);
 		if (command)
 			argv[0] = command;
@@ -52,7 +54,6 @@ int main(int ac, char **argv, char **env)
 			_puts(ERROR);
 			continue;
 		}
-		 printf("%s\n", command);	
 		 		
 		if (exec(argv, env) == -1)
 			_puts(ERROR);
