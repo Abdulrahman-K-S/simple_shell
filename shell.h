@@ -47,8 +47,9 @@ char *_strcat(char *first, char *second);
 
 /*                    path handlers                     */
 struct directories *path_parse(void);
-char *path_finder(char* command);
+char *path_finder(char *command);
 int free_list(struct directories *direcs);
+char *_getenv(const char *name);
 
 /*   execution function   */
 int exec(char **argv, char **env);

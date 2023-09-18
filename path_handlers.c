@@ -15,7 +15,7 @@ struct directories *path_parse(void)
     struct directories *head = NULL;
     struct directories *new_dir;
 
-    path = getenv("PATH");
+    path = _getenv("PATH");
 
     if (path == NULL) 
     {
@@ -50,7 +50,9 @@ struct directories *path_parse(void)
 */
 char *path_finder(char* command)
 {
+    struct directories *head;
     struct directories *direcs;
+    /*primary is the concatenation of the '/' character and the command given*/
     char *primary;
     char *full_directory;
     struct stat st;
@@ -59,7 +61,7 @@ char *path_finder(char* command)
         return (command);
 
     direcs = path_parse();
-    
+    head = direcs;
     while (direcs)
     {
         primary = _strcat("/", command);
@@ -75,11 +77,11 @@ char *path_finder(char* command)
     
     if (!direcs)
     {
-        free_list(direcs);
+        free_list(head);
         return (NULL);
     }
     printf("%s\n", full_directory);
-    free_list(direcs);
+    free_list(head);
     return (full_directory);
 }
 
@@ -96,11 +98,42 @@ int free_list(struct directories *direcs)
     if (!direcs)
         return (0);
 
-    while (direcs)
+    while (direcs != NULL)
     {
         tmp = direcs->next;
         free(direcs);
         direcs = tmp;
     }
     return (0);
+}
+
+/**
+ * _getenv - gets environment variable from the environment
+ * @name: name of the variable to get
+ * Return: environment variable string
+*/
+char *_getenv(const char *name)
+{
+    extern char **environ;
+    int i = 0;
+    char *env_var = malloc(sizeof(char *) * 100);
+    if (!env_var)
+    {
+        return (NULL);
+    }
+
+    while (environ[i] != NULL)
+    {
+        env_var = strdup(environ[i]);
+        env_var = strtok(env_var, "=");
+        if (strcmp(env_var, name) == 0)
+        {
+            env_var = strtok(NULL, "=");
+            return (env_var);
+        }
+        else
+            i++;
+    }
+    free(env_var);
+    return NULL;
 }
