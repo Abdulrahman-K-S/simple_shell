@@ -31,33 +31,61 @@ struct directories
 /*                printers.c Modules                    */
 
 /*   The printers for the shell                         */
+
 void _putchar(char c);
 void _puts(char *s);
+
+/* ==================================================== */
+/* ==================================================== */
 
 /*             input_parsing.c Modules                  */
 
 /*   The input manipulators so the shell can understand */
 /*   what the user is typing                            */
+
 int getNumberofTokens(char *lineptr);
 void storeTokens(char **argv, char *lineptr);
+
+/* ==================================================== */
+/* ==================================================== */
 
 /*             string_utils.c Modules                   */
 /*   The functions that manipulate the string to get    */
 /*   certain outputs from them                          */
+
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *first, char *second);
 char *_strdup(const char *String);
 int _strcmp(const char *First, const char *Second);
 
+/* ==================================================== */
+/* ==================================================== */
+
 /*                    path handlers                     */
+
 extern char **environ;
 struct directories *path_parse(void);
 char *path_finder(char *command);
 int free_list(struct directories *direcs);
 char *_getenv(const char *name);
 
-/*   execution function   */
+/* ==================================================== */
+/* ==================================================== */
+
+/*                  execution function                  */
+
 int exec(char **argv, char **env);
+
+/* ==================================================== */
+/* ==================================================== */
+
+/*                isit_built.c Modules                  */
+/* The functions that represent the built-in functions  */
+/* that the shell should have                           */
+
+int is_built(char **argv, char *lineptr);
+void exit_shell(char **argv, char *lineptr);
+void print_enviroment(void);
 
 #endif
