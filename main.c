@@ -30,10 +30,7 @@ int main(int ac, char **argv, char **env)
 			return (-1);
 		}
 		if(is_empty(lineptr) == 0)
-		{
-			_puts(ERROR);
 			continue;
-		}
 
 		numOFtokens = getNumberofTokens(lineptr);
 
