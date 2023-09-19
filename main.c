@@ -35,6 +35,9 @@ int main(int ac, char **argv, char **env)
 		argv = malloc(sizeof(char *) * numOFtokens);
 		storeTokens(argv, lineptr);
 
+		if (is_built(argv, lineptr) == 0)
+			continue;
+
 		command = path_finder(argv[0]);
 		if (command)
 			argv[0] = command;
@@ -47,6 +50,5 @@ int main(int ac, char **argv, char **env)
 		if (exec(argv, env) == -1)
 			_puts(ERROR);
 	}
-
 	return (1);
 }
