@@ -58,3 +58,31 @@ void storeTokens(char **argv, char *lineptr)
 
 	free(lineptr_cpy);
 }
+
+/**
+ * is_empty - checks to see if given user input is empty or not
+ * and returns 0 if empty or just spaces are used
+ * @lineptr: user input
+ *
+ * Return: 0 if nothing is entered and if something is entered
+*/
+int is_empty(char *lineptr)
+{
+	int i = 0;
+	int pos = 0;
+
+	if (_strlen(lineptr) == 0 || lineptr[0] == '\n')
+		return (0);
+
+	while (lineptr[i])
+	{
+		if (lineptr[i] > 32)
+			pos++;
+		i++;
+	}
+
+	if (pos > 0)
+		return (1);
+	
+	return(0);
+}
