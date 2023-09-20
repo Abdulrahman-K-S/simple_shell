@@ -28,6 +28,8 @@ int main(int ac, char **argv, char **env)
 			_putchar('\n');
 			return (-1);
 		}
+		if (is_empty(lineptr) == 0)
+			continue;
 
 		numOFtokens = getNumberofTokens(lineptr);
 
