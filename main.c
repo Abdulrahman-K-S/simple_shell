@@ -11,7 +11,6 @@
 */
 int main(int ac, char **argv, char **env)
 {
-	char *command;
 	char *lineptr;
 	size_t n = 0;
 	int numOFtokens;
@@ -37,15 +36,6 @@ int main(int ac, char **argv, char **env)
 
 		if (is_built(argv, lineptr) == 1)
 		{
-			command = path_finder(argv[0]);
-			if (command)
-				argv[0] = command;
-			else
-			{
-				_puts(ERROR);
-				continue;
-			}
-
 			if (exec(argv, env) == -1)
 				_puts(ERROR);
 		}
