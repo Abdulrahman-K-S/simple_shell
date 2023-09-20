@@ -43,8 +43,7 @@ void exit_shell(char **argv, char *lineptr)
 	{
 		while (argv[i])
 		{
-			if (argv[i])
-				free(argv[i]);
+			free(argv[i]);
 
 			i++;
 		}
