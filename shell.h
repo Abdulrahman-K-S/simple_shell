@@ -45,6 +45,7 @@ void _puts(char *s);
 
 int getNumberofTokens(char *lineptr);
 void storeTokens(char **argv, char *lineptr);
+int is_empty(char *lineptr);
 
 /* ==================================================== */
 /* ==================================================== */
