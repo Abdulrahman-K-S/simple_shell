@@ -15,12 +15,12 @@ int getNumberofTokens(char *lineptr)
 
 	_strcpy(lineptr_cpy, lineptr);
 
-	token = strtok(lineptr_cpy, DELIMETER);
+	token = _strtok(lineptr_cpy, DELIMETER);
 
 	while (token != NULL)
 	{
 		num_of_tokens++;
-		token = strtok(NULL, DELIMETER);
+		token = _strtok(NULL, DELIMETER);
 	}
 	num_of_tokens++;
 
@@ -44,14 +44,14 @@ void storeTokens(char **argv, char *lineptr)
 
 	_strcpy(lineptr_cpy, lineptr);
 
-	token = strtok(lineptr_cpy, DELIMETER);
+	token = _strtok(lineptr_cpy, DELIMETER);
 
 	for (i = 0; token != NULL; i++)
 	{
 		argv[i] = malloc(sizeof(char) * _strlen(token));
 		_strcpy(argv[i], token);
 
-		token = strtok(NULL, DELIMETER);
+		token = _strtok(NULL, DELIMETER);
 	}
 
 	argv[i] = NULL;

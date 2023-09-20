@@ -89,4 +89,12 @@ int is_built(char **argv, char *lineptr);
 void exit_shell(char **argv, char *lineptr);
 void print_enviroment(void);
 
+/* ==================================================== */
+/* ==================================================== */
+
+/*                  string_utils2.c                     */
+
+char *_strtok(char *input, const char *delim);
+int ayto(char z, const char *delim);
+
 #endif
