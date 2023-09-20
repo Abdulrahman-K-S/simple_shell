@@ -11,7 +11,7 @@
 */
 int main(int ac, char **argv, char **env)
 {
-	char *lineptr[1024];
+	char *lineptr = malloc(sizeof(char *) * 1024);
 	size_t n = 0;
 	int numOFtokens;
 
