@@ -5,19 +5,19 @@
  *
  * @ac: Number of comandline arguments.
  * @argv: Pointer to an array of command line arguments.
- * @env: The enviroment variable.
  *
  * Return: 1 indicating a success. -1 if there was an error.
 */
-int main(int ac, char **argv, char **env)
+int main(int ac, char **argv)
 {
-	char *lineptr = malloc(sizeof(char *) * 1024);
+	char *lineptr;
 	size_t n = 0;
-	int numOFtokens;
+	int numOFtokens, status;
 
 	(void)ac;
 
-	while (1)
+	status = 1;
+	while (status)
 	{
 		/* Print off the prompt before the user input */
 		_puts(PROMPT);
@@ -26,20 +26,23 @@ int main(int ac, char **argv, char **env)
 		if (getline(&lineptr, &n, stdin) == -1)
 		{
 			_putchar('\n');
-			return (-1);
+			status = 0;
 		}
-		if (is_empty(lineptr) == 0)
-			continue;
-
-		numOFtokens = getNumberofTokens(lineptr);
-
-		argv = malloc(sizeof(char *) * numOFtokens);
-		storeTokens(argv, lineptr);
-
-		if (is_built(argv, lineptr) == 1)
+		else
 		{
-			if (exec(argv, env) == -1)
-				_puts(ERROR);
+			if (is_empty(lineptr) == 0)
+				continue;
+
+			numOFtokens = getNumberofTokens(lineptr);
+
+			argv = malloc(sizeof(char *) * numOFtokens);
+			storeTokens(argv, lineptr);
+
+			if (is_built(argv, lineptr) == 1)
+			{
+				if (exec(argv, NULL) == -1)
+					_puts(ERROR);
+			}
 		}
 	}
 
