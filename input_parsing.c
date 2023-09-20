@@ -83,6 +83,6 @@ int is_empty(char *lineptr)
 
 	if (pos > 0)
 		return (1);
-	
-	return(0);
+
+	return (0);
 }
