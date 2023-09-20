@@ -4,6 +4,7 @@
  * exec - executes the arguments through system calls
  * execve, fork and wait
  * @argv: arguments inserted
+ * @env: The enviroment variable.
  * Return: 0 on success and -1 on failure
 */
 int exec(char **argv, char **env)
