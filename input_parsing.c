@@ -46,13 +46,16 @@ void storeTokens(char **argv, char *lineptr)
 
 	token = _strtok(lineptr_cpy, DELIMETER);
 
-	for (i = 0; token != NULL; i++)
-	{
-		argv[i] = malloc(sizeof(char) * _strlen(token));
-		_strcpy(argv[i], token);
+    for (i = 0; token != NULL; i++)
+    {
+        if (token != NULL)
+        {
+            argv[i] = malloc(sizeof(char) * _strlen(token));
+            _strcpy(argv[i], token);
+        }
 
-		token = _strtok(NULL, DELIMETER);
-	}
+        token = _strtok(NULL, DELIMETER);
+    }
 
 	argv[i] = NULL;
 
