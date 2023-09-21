@@ -11,7 +11,7 @@
 int is_delim(char Character, char *Delimeter)
 {
 	while (*Delimeter)
-		if (*Delimeter++ == c)
+		if (*Delimeter++ == Character)
 			return (1);
 	return (0);
 }
@@ -106,7 +106,7 @@ char **strtok(char *String, char *Delimiter)
 		{
 			for (k = 0; k < j; k++)
 				free(string[k]);
-			free(s);
+			free(string);
 			return (NULL);
 		}
 		for (l = 0; l < k; l++)
