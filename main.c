@@ -6,7 +6,7 @@
  * @ac: Number of comandline arguments.
  * @argv: Pointer to an array of command line arguments.
  *
- * Return: 1 indicating a success. -1 if there was an error.
+ * Return: 1 indicating a success.  -1 if there was an error.
 */
 int main(int ac, char **argv)
 {
