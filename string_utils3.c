@@ -68,6 +68,37 @@ int _atoi(char *String)
 }
 
 /**
+ * _erratoi - A function that converts a string into an integer.
+ *
+ * @String: The string to be converted.
+ *
+ * Return: 0 if no number's in the string or the converted number. And
+ *         -1 if there's an error.
+*/
+int _erratoi(char *String)
+{
+	int i = 0;
+	unsigned long int result = 0;
+
+	if (*String == '+')
+		String++;
+	for (i = 0; String[i] != '\0'; i++)
+	{
+		if (String[i] >= '0' && String[i] <= '9')
+		{
+			result *= 10;
+			result += (String[i] - '0');
+			if (result > INT_MAX)
+				return (-1);
+		}
+		else
+			return (-1);
+	}
+
+	return (result);
+}
+
+/**
  * _strtok - A function that splits a string into words.
  *
  * @String: The inputed string.
