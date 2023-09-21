@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * is_delim - A functions that checks if character is a dleimeter or not.
+ * is_delim - A functions that checks if character is a delimeter or not.
  *
  * @Character: The character to check on.
  * @Delimeter: The delimeter string.
@@ -68,7 +68,7 @@ int _atoi(char *String)
 }
 
 /**
- * strtok - A function that splits a stirng into words.
+ * strtok - A function that splits a string into words.
  *
  * @String: The inputed string.
  * @Delimiter: The delimeter string.
