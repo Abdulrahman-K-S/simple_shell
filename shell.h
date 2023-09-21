@@ -34,6 +34,15 @@ struct directories
 };
 
 /* ==================== */
+/* memorytime.c Modules */
+/* ==================== */
+
+char *_memset(char *, char, unsigned int);
+void freeStrings(char **);
+int freeNull(void **);
+void *_realloc(void *, unsigned int, unsigned int);
+
+/* ==================== */
 /*  printers.c Modules  */
 /* ==================== */
 
