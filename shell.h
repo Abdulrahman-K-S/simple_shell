@@ -6,6 +6,11 @@
 #define DELIMETER " \n"
 #define ERROR "./shell: No such file or directory\n"
 
+/* For read/write buffers */
+#define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
+
 /* The imported libraries */
 #include <unistd.h>
 #include <stdio.h>
@@ -28,12 +33,41 @@ struct directories
 	struct directories *next;
 };
 
-/*                printers.c Modules                    */
+/* ==================== */
+/*  printers.c Modules  */
+/* ==================== */
 
-/*   The printers for the shell                         */
+int _putchar(char);
+void _puts(char *);
 
-void _putchar(char c);
-void _puts(char *s);
+
+/* ====================== */
+/* string_utils.c Modules */
+/* ====================== */
+
+int _strlen(char *);
+int _strcmp(char *, char *);
+char *_strcat(char *, char *);
+char *_strcpy(char *, char *);
+char *_strdup(const char *);
+
+/* ======================= */
+/* string_utils2.c Modules */
+/* ======================= */
+
+char *strstr(const char *, const char *);
+char *_strncat(char *, char *, int);
+char *_strncpy(char *, char *, int);
+char *_strchr(char *, char);
+
+/* ======================= */
+/* string_utils3.c Modules */
+/* ======================= */
+
+int is_delim(char, char *);
+int _isalpha(int);
+int _atoi(char *);
+char **_strtok(char *, char *);
 
 /* ==================================================== */
 /* ==================================================== */
@@ -47,18 +81,6 @@ int getNumberofTokens(char *lineptr);
 void storeTokens(char **argv, char *lineptr);
 int is_empty(char *lineptr);
 
-/* ==================================================== */
-/* ==================================================== */
-
-/*             string_utils.c Modules                   */
-/*   The functions that manipulate the string to get    */
-/*   certain outputs from them                          */
-
-int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-char *_strcat(char *first, char *second);
-char *_strdup(const char *String);
-int _strcmp(const char *First, const char *Second);
 
 /* ==================================================== */
 /* ==================================================== */
@@ -88,13 +110,5 @@ int exec(char **argv, char **env);
 int is_built(char **argv, char *lineptr);
 void exit_shell(char **argv, char *lineptr);
 void print_enviroment(void);
-
-/* ==================================================== */
-/* ==================================================== */
-
-/*                  string_utils2.c                     */
-
-char *_strtok(char *input, const char *delim);
-int ayto(char z, const char *delim);
 
 #endif
