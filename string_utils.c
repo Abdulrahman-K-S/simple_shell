@@ -1,126 +1,119 @@
 #include "shell.h"
 
 /**
- * _strlen - A function that returns the size of the
- *           inputed string
+ * _strlen - A functions that returns the length of a string.
  *
- * @s: char pointer
+ * @String: The string whose lenght to be checked.
  *
- * Return: The size of the inputed string
+ * Return: integer lenght of the string.
 */
-int _strlen(char *s)
+int _strlen(char *String)
 {
-	int size = 0;
-
-	while (*s != '\0')
-	{
-		size++;
-		s++;
-	}
-
-	return (size);
-}
-
-/**
- * _strcpy - A function that copies the string pointed to by src,
- *            including the terminating null byte (\0),
- *            to the buffer pointed to by dest.
- *
- * @dest: char pointer
- * @src: char pointer
- *
- * Return: The (dest) pointer that houses a copy of src.
-*/
-char *_strcpy(char *dest, char *src)
-{
-	int i = -1;
-
-	do {
-		i++;
-		dest[i] = src[i];
-	} while (src[i] != '\0');
-
-	return (dest);
-}
-
-/**
- * _strcat - concatenates two strings
- * @f: first string to be concatenated
- * @s: second string to be concatenated
- *
- * Return: a string combining both strings
-*/
-char *_strcat(char *f, char *s)
-{
-	char *combined;
-	int i = 0, j = 0;
-
-	combined = malloc(sizeof(char *) * (_strlen(f) + _strlen(s)) + 1);
-	if (!combined)
-	{
-		return (NULL);
-	}
-
-	while (f[i])
-	{
-		combined[i] = f[i];
-		i++;
-	}
-	while (s[j])
-	{
-		combined[i] = s[j];
-		i++;
-		j++;
-	}
-	combined[i] = '\0';
-
-	return (combined);
-}
-
-/**
- * _strdup - A function that duplicates the string parameter
- *
- * @String: The string to be duplicated.
- *
- * Return: A duplicate of the parameter.
-*/
-char *_strdup(const char *String)
-{
-	char *str;
 	int i = 0;
 
-	str = malloc(sizeof(char) * strlen(String) + 1);
-	if (!str)
-		return (NULL);
+	if (!String)
+		return (0);
 
-	while (String[i])
-	{
-		str[i] = String[i];
+	while (*String++)
 		i++;
-	}
-
-	str[i] = '\0';
-	return (str);
+	return (i);
 }
 
 /**
- * _strcmp - A function that compares two strings.
+ * _strcmp - A function that performs lexicogarphic comparison of two strings.
  *
- * @First: 1st string.
- * @Second: 2nd string.
+ * @Str1: The first string.
+ * @Str2: The second string.
  *
- * Return: 0 if they're equal otherwise the difference between them.
+ * Return: Negative if s1 < s2, Positive if s1 > s2, Zero if s1 == s2.
 */
-int _strcmp(const char *First, const char *Second)
+int _strcmp(char *Str1, char *Str2)
 {
-	while ((*First != '\0' && *Second != '\0') && (*First == *Second))
+	while (*Str1 && *Str2)
 	{
-		First++;
-		Second++;
+		if (*Str1 != *Str2)
+			return (*Str1 - *Str2);
+
+		Str1++;
+		Str2++;
 	}
 
-	if (*First == '\0' && *Second == '\0')
+	if (*Str1 == *Str2)
 		return (0);
 	else
-		return ((int)(*First - *Second));
+		return (*Str1 < *Str2 ? -1 : 1);
+}
+
+/**
+ * _strcat - A function that concatenates two strings.
+ *
+ * @Destination: The destination buffer.
+ * @Source: The source buffer
+ *
+ * Return: Pointer to destination buffer
+*/
+char *_strcat(char *Destination, char *Source)
+{
+	char *retrn = Destination;
+
+	while (*Destination)
+		Destination++;
+	while (*Source)
+		*Destination = *Source++;
+
+	*Destination = *Source;
+	return (retrn);
+}
+
+/**
+ * _strcpy - A function that copes a string.
+ *
+ * @Destination: The destination to be copied to.
+ * @Source: The source of the string copied.
+ *
+ * Return: Pointer to the destination.
+*/
+char *_strcpy(char *Destination, char *Source)
+{
+	int i = 0;
+
+	if (Destination == Source || Source == 0)
+		return (Destination);
+
+	while (Source[i])
+	{
+		Destination[i] = Source[i];
+		i++;
+	}
+
+	Destination[i] = 0;
+	return (Destination);
+}
+
+/**
+ * _strdup - A function that duplicates a string.
+ *
+ * @_String: The string to be duplicated. (const)
+ *
+ * Return: The pointer to the duplicated string.
+*/
+char *_strdup(const char *_String)
+{
+	int length = 0;
+	char *retrn;
+
+	if (_String == NULL)
+		return (NULL);
+
+	while (*_String++)
+		length++;
+
+	retrn = malloc(sizeof(char) * (length + 1));
+	if (!retrn)
+		return (NULL);
+
+	for (length++; length--;)
+		retrn[length] = *--_String;
+
+	return (retrn);
 }
