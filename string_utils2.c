@@ -1,53 +1,99 @@
 #include "shell.h"
 
 /**
- * ayto - checks if the chracter is the delimeter (Are You The One)
- * @z: char being matched
- * @delim: input string
- * Return: 1 if character matches delimeter
- */
-int ayto(char z, const char *delim)
+ * _strstr - A functions that finds the given substring in the string.
+ *
+ * @_String: The string to be searched. (const)
+ * @_SubString: The substring to find. (const)
+ *
+ * Return: the address of next char of _String or null.
+*/
+char *_strstr(const char *_String, const char *_SubString)
 {
-	while (*delim && delim)
-	{
-		if (z == *delim)
-		{
-			return (1);
-		}
-		++delim;
-	}
-	return (0);
+	while (*_SubString)
+		if (*_SubString++ != *_String++)
+			return (NULL);
+	return ((char *)_String);
 }
 
 /**
- * _strtok - creates an array of tokens
- * @input: input string
- * @delim: delimater " "
- * Return: pointer to head of list PATH
+ * _strncpy - A function that copies a string.
+ *
+ * @Destination: The destinatoin string to be copied to.
+ * @Source: The source string.
+ * @n: The amount of characters to be copied.
+ *
+ * Return: The concatenated string.
 */
-char *_strtok(char *input, const char *delim)
+char *_strncpy(char *Destination, char *Source, int n)
 {
-	static char *w;
-	static unsigned int v;
-	char *tokens = NULL;
-	int control = 0;
+	int i, j;
+	char *string = Destination;
 
-	if (input)
+	i = 0;
+	while (Source[i] != '\0' && i < n - 1)
 	{
-		w = input;
-		for (v = 0; w[v]; v++)
+		Destination[i] = Source[i];
+		i++;
+	}
+
+	if (i < n)
+	{
+		j = i;
+		while (j < n)
 		{
-			if (ayto(w[v], delim))
-				w[v] = '\0';
+			Destination[j] = '\0';
+			j++;
 		}
 	}
 
-	if (w == NULL || *w == '\0')
-		return (NULL);
-	tokens = w;
-	v = _strlen(w);
-	if (w[v] == '\0' && _strlen(w) > 0)
-		control = 1;
-	w = w + _strlen(w) + control;
-	return (tokens);
+	return (string);
+}
+
+/**
+ * _strncat - A function that concatenates two string.
+ *
+ * @Destination: The first string.
+ * @Source: The second string.
+ * @n: The amount of bytes to be taken from the source.
+ *
+ * Return: The concatenated string.
+*/
+char *_strncat(char *Destination, char *Source, int n)
+{
+	int i = 0, j = 0;
+	char *string = Destination;
+
+	while (Destination[i] != '0')
+		i++;
+
+	while (Source[j] != '\0' && j < n)
+	{
+		Destination[i] = Source[j];
+		i++;
+		j++;
+	}
+
+	if (j < n)
+		Destination[i] = '0';
+
+	return (string);
+}
+
+/**
+ * _strchr - A function that locates a character in a string.
+ *
+ * @String: The string to be searched.
+ * @Character: The character to look for.
+ *
+ * Return: A pointer to the memory area String.
+*/
+char *_strchr(char *String, char Character)
+{
+	do {
+		if (*String == Character)
+			return (String);
+	} while (*String++ != '0');
+
+	return (NULL);
 }
