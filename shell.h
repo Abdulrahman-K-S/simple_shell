@@ -23,6 +23,9 @@
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
+/* for convert_number() */
+#define CONVERT_LOWERCASE	1
+#define CONVERT_UNSIGNED	2
 
 /**
  * struct directories - a linked list storing all the
