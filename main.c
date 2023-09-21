@@ -10,7 +10,7 @@
 */
 int main(int ac, char **argv)
 {
-	char *lineptr;
+	char *lineptr, *first = malloc(sizeof(char *) * 100);
 	size_t n = 0;
 	int numOFtokens, status;
 
@@ -37,11 +37,16 @@ int main(int ac, char **argv)
 
 			argv = malloc(sizeof(char *) * numOFtokens);
 			storeTokens(argv, lineptr);
+			first = argv[0];
 
 			if (is_built(argv, lineptr) == 1)
 			{
 				if (exec(argv, NULL) == -1)
-					_puts(ERROR);
+				{
+					_puts("./hsh: 1: ");
+					_puts(first);
+					_puts(": not found\n");
+				}
 			}
 		}
 	}
