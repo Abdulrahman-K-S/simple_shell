@@ -1,6 +1,18 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+/* The imported libraries */
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <limits.h>
+#include <fcntl.h>
+#include <errno.h>
+
 /* Defined vars */
 #define PROMPT "$ "
 #define DELIMETER " \n"
@@ -11,14 +23,6 @@
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
 
-/* The imported libraries */
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
 
 /**
  * struct directories - a linked list storing all the
@@ -78,6 +82,15 @@ int _isalpha(int);
 int _atoi(char *);
 int _erratoi(char *);
 char **_strtok(char *, char *);
+
+/* ======================== */
+/*   more_utils.c Modules   */
+/* ======================== */
+
+int interactive(info_t *);
+int print_d(int, int);
+char *conver_number(long int, int, int);
+void remove_comments(char *);
 
 /* ==================================================== */
 /* ==================================================== */
