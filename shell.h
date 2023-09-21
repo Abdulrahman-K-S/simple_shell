@@ -76,6 +76,7 @@ char *_strchr(char *, char);
 int is_delim(char, char *);
 int _isalpha(int);
 int _atoi(char *);
+int _erratoi(char *);
 char **_strtok(char *, char *);
 
 /* ==================================================== */
