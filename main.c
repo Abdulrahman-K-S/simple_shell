@@ -10,7 +10,7 @@
 */
 int main(int ac, char **argv)
 {
-	char *lineptr, *first = malloc(sizeof(char *) * 100);
+	char *lineptr, *first;
 	size_t n = 0;
 	int numOFtokens, status;
 
@@ -27,6 +27,7 @@ int main(int ac, char **argv)
 		{
 			_putchar('\n');
 			status = 0;
+			break;
 		}
 		else
 		{
@@ -37,7 +38,7 @@ int main(int ac, char **argv)
 
 			argv = malloc(sizeof(char *) * numOFtokens);
 			storeTokens(argv, lineptr);
-			first = argv[0];
+		        first = _strdup(argv[0]);
 
 			if (is_built(argv, lineptr) == 1)
 			{
@@ -49,7 +50,10 @@ int main(int ac, char **argv)
 				}
 			}
 		}
+
+		free(first);
 	}
 
+	free(first);
 	return (1);
 }
