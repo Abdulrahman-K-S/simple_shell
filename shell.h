@@ -28,17 +28,18 @@
 #define CONVERT_UNSIGNED	2
 
 /**
- * struct directories - a linked list storing all the
- *                      directories in the $PATH variable.
+ * struct liststr - singly linked list
  *
- * @dir: The string of the directory.
- * @next: The node to the next directory.
+ * @num: The number field
+ * @str: A string
+ * @next: points to the next node
 */
-struct directories
+typedef struct liststr
 {
-	char *dir;
-	struct directories *next;
-};
+	int num;
+	char *str;
+	struct liststr *next;
+} list_t;
 
 /* ======================== */
 /*      list.c Modules      */
@@ -123,47 +124,5 @@ int interactive(info_t *);
 int print_d(int, int);
 char *conver_number(long int, int, int);
 void remove_comments(char *);
-
-/* ==================================================== */
-/* ==================================================== */
-
-/*             input_parsing.c Modules                  */
-
-/*   The input manipulators so the shell can understand */
-/*   what the user is typing                            */
-
-int getNumberofTokens(char *lineptr);
-void storeTokens(char **argv, char *lineptr);
-int is_empty(char *lineptr);
-
-
-/* ==================================================== */
-/* ==================================================== */
-
-/*                    path handlers                     */
-
-extern char **environ;
-struct directories *path_parse(void);
-char *path_finder(char *command);
-int free_list(struct directories *direcs);
-char *_getenv(const char *name);
-
-/* ==================================================== */
-/* ==================================================== */
-
-/*                  execution function                  */
-
-int exec(char **argv, char **env);
-
-/* ==================================================== */
-/* ==================================================== */
-
-/*                isit_built.c Modules                  */
-/* The functions that represent the built-in functions  */
-/* that the shell should have                           */
-
-int is_built(char **argv, char *lineptr);
-void exit_shell(char **argv, char *lineptr);
-void print_enviroment(void);
 
 #endif
