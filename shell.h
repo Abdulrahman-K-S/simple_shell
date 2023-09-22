@@ -22,6 +22,12 @@
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
 
+/* for command chaining */
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
+
 /* For the history.c */
 #define HIST_FILE	".simple_shell_history"
 #define HIST_MAX	4096
@@ -153,7 +159,7 @@ void *_realloc(void *, unsigned int, unsigned int);
 
 char *find_path(info_t *, char *, char *);
 int is_cmd(info_t *, char *);
-char *dup_chars(char *, int , int );
+char *dup_chars(char *, int, int);
 
 /* =================== */
 /*  history.c Modules  */
@@ -238,5 +244,15 @@ int set_alias(info_t *, char *);
 int unset_alias(info_t *, char *);
 int print_alias(list_t *);
 int _alias(info_t *);
+
+/* ================= */
+/*  chain.c Modules  */
+/* ================= */
+
+int is_chain(info_t *, char *, size_t *);
+void check_chain(info_t *, char *, size_t *, size_t, size_t);
+int replace_alias(info_t *);
+int replace_vars(info_t *);
+int replace_string(char **, char *);
 
 #endif
