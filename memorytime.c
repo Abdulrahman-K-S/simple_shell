@@ -1,86 +1,79 @@
 #include "shell.h"
 
 /**
- * _memset - A function that fills the memory with a constant byte.
- *
- * @String: The pointer to the memory area.
- * @Byte: The byte to fill the string with.
- * @n: The amount of bytes to be files.
- *
- * Return: A pointer to the memory area of String.
-*/
-char *_memset(char *String, char Byte, unsigned int n)
+ **_memset - fills memory with a constant byte
+ *@s: the pointer to the memory area
+ *@b: the byte to fill *s with
+ *@n: the amount of bytes to be filled
+ *Return: (s) a pointer to the memory area s
+ */
+char *_memset(char *s, char b, unsigned int n)
 {
 	unsigned int i;
 
 	for (i = 0; i < n; i++)
-		String[i] = Byte;
-	return (String);
+		s[i] = b;
+	return (s);
 }
 
 /**
- * freeStrings - A function that frees a string of strings
- *
- * @Strings: The string of strings.
-*/
-void freeStrings(char **Strings)
+ * ffree - frees a string of strings
+ * @pp: string of strings
+ */
+void ffree(char **pp)
 {
-	char **begin = Strings;
+	char **a = pp;
 
-	if (!Strings)
+	if (!pp)
 		return;
-
-	while (*Strings)
-		free(*Strings++);
-	free(begin);
+	while (*pp)
+		free(*pp++);
+	free(a);
 }
 
 /**
- * freeNull - A function that frees a pointer and NULLs the address.
+ * _realloc - reallocates a block of memory
+ * @ptr: pointer to previous malloc'ated block
+ * @old_size: byte size of previous block
+ * @new_size: byte size of new block
  *
- * @Ptr: The pointer to be freed.
- *
- * Return: 1 if freed otherwise 0.
-*/
-int freeNull(void **Ptr)
+ * Return: pointer to da ol'block nameen.
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	if (Ptr && *Ptr)
+	char *p;
+
+	if (!ptr)
+		return (malloc(new_size));
+	if (!new_size)
+		return (free(ptr), NULL);
+	if (new_size == old_size)
+		return (ptr);
+
+	p = malloc(new_size);
+	if (!p)
+		return (NULL);
+
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+		p[old_size] = ((char *)ptr)[old_size];
+	free(ptr);
+	return (p);
+}
+
+/**
+ * bfree - frees a pointer and NULLs the address
+ * @ptr: address of the pointer to free
+ *
+ * Return: 1 if freed, otherwise 0.
+ */
+int bfree(void **ptr)
+{
+	if (ptr && *ptr)
 	{
-		free(*Ptr);
-		*Ptr = NULL;
+		free(*ptr);
+		*ptr = NULL;
 		return (1);
 	}
 	return (0);
-}
-
-/**
- * _realloc - A function that reallocates a block of memory
- *
- * @Ptr: The pointer to previous malloc'ated block.
- * @oldSize: The byte size of previous block.
- * @newSize: The byte size of new block.
- *
- * Return: A pointer to the new allocated block.
- */
-void *_realloc(void *Ptr, unsigned int oldSize, unsigned int newSize)
-{
-	char *ptr;
-
-	if (!Ptr)
-		return (malloc(newSize));
-	if (!newSize)
-		return (free(Ptr), NULL);
-	if (newSize == oldSize)
-		return (Ptr);
-
-	ptr = malloc(newSize);
-	if (!ptr)
-		return (NULL);
-
-	oldSize = oldSize < newSize ? oldSize : newSize;
-	while (oldSize--)
-		ptr[oldSize] = ((char *)Ptr)[oldSize];
-
-	free(Ptr);
-	return (ptr);
 }

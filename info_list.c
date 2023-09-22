@@ -1,82 +1,74 @@
 #include "shell.h"
 
 /**
- * set_info_list - Initializes the info list given in the parameter
- *
- * @Info: The info struct.
- * @argv: The argument pointer.
-*/
-void set_info_list(info_t *Info, char **argv)
+ * clear_info - initializes info_t struct
+ * @info: struct address
+ */
+void clear_info(info_t *info)
 {
-	int i;
+	info->arg = NULL;
+	info->argv = NULL;
+	info->path = NULL;
+	info->argc = 0;
+}
 
-	/* Sets the name of the program */
-	Info->fname = argv[0];
-	if (Info->arg)
+/**
+ * set_info - initializes info_t struct
+ * @info: struct address
+ * @av: argument vector
+ */
+void set_info(info_t *info, char **av)
+{
+	int i = 0;
+
+	info->fname = av[0];
+	if (info->arg)
 	{
-		Info->argv = _strtok(Info->arg, " \t");
-		if (!Info->argv)
+		info->argv = strtow(info->arg, " \t");
+		if (!info->argv)
 		{
-			Info->argv = malloc(sizeof(char *) * 2);
-			if (Info->argv)
+
+			info->argv = malloc(sizeof(char *) * 2);
+			if (info->argv)
 			{
-				Info->argv[0] = _strdup(Info->arg);
-				Info->argv[1] = NULL;
+				info->argv[0] = _strdup(info->arg);
+				info->argv[1] = NULL;
 			}
 		}
-
-		for (i = 0; Info->argv && Info->argv[i]; i++)
+		for (i = 0; info->argv && info->argv[i]; i++)
 			;
-		Info->argc = i;
+		info->argc = i;
 
-		replace_alias(Info);
-		replace_vars(Info);
+		replace_alias(info);
+		replace_vars(info);
 	}
 }
 
 /**
- * clear_info_list - A function that clears the info struct
- *
- * @Info: The info struct.
-*/
-void clear_info_list(info_t *Info)
+ * free_info - frees info_t struct fields
+ * @info: struct address
+ * @all: true if freeing all fields
+ */
+void free_info(info_t *info, int all)
 {
-	Info->arg = NULL;
-	Info->argv = NULL;
-	Info->path = NULL;
-	Info->argc = 0;
-}
-
-/**
- * free_info_list - A function that frees the entire info struct.
- *
- * @Info: The info struct.
- * @ALL: Specifing whether to clear all or not.
-*/
-void free_info_list(info_t *Info, int ALL)
-{
-	freeStrings(Info->argv);
-
-	Info->argv = NULL;
-	Info->path = NULL;
-
-	if (ALL)
+	ffree(info->argv);
+	info->argv = NULL;
+	info->path = NULL;
+	if (all)
 	{
-		if (!Info->cmd_buf)
-			free(Info->arg);
-		if (Info->env)
-			free_list(&(Info->env));
-		if (Info->history)
-			free_list(&(Info->history));
-		if (Info->alias)
-			free_list(&(Info->alias));
-
-		freeStrings(Info->environ);
-		Info->environ = NULL;
-		freeNull((void **)Info->cmd_buf);
-
-		if (Info->readfd > 2)
-			close(Info->readfd);
+		if (!info->cmd_buf)
+			free(info->arg);
+		if (info->env)
+			free_list(&(info->env));
+		if (info->history)
+			free_list(&(info->history));
+		if (info->alias)
+			free_list(&(info->alias));
+		ffree(info->environ);
+			info->environ = NULL;
+		bfree((void **)info->cmd_buf);
+		if (info->readfd > 2)
+			close(info->readfd);
 		_putchar(BUF_FLUSH);
 	}
 }

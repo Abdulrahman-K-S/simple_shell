@@ -1,149 +1,74 @@
 #include "shell.h"
 
 /**
- * is_delim - A functions that checks if character is a dleimeter or not.
- *
- * @Character: The character to check on.
- * @Delimeter: The delimeter string.
- *
- * Return: 1 if true otherwise 0.
-*/
-int is_delim(char Character, char *Delimeter)
+ **_strncpy - copies a string
+ *@dest: the destination string to be copied to
+ *@src: the source string
+ *@n: the amount of characters to be copied
+ *Return: the concatenated string
+ */
+char *_strncpy(char *dest, char *src, int n)
 {
-	while (*Delimeter)
-		if (*Delimeter++ == Character)
-			return (1);
-	return (0);
-}
+	int i, j;
+	char *s = dest;
 
-/**
- * _isalpha - A functions that checks if the character is from the alphabet
- *            or not.
- *
- * @Character: The character to check on.
- *
- * Return: 1 if it's from the alphabet otherwise 0
-*/
-int _isalpha(int Character)
-{
-	if ((Character >= 'a' && Character <= 'z') ||
-	    (Character >= 'A' && Character <= 'Z'))
-		return (1);
-	return (0);
-}
-
-/**
- * _atoi - A function that converts a string into an integer.
- *
- * @String: The string to be converted.
- *
- * Return: 0 if no number is in the string otherwise return the converted num.
-*/
-int _atoi(char *String)
-{
-	int i, sign = 1, flag = 0, output;
-	unsigned int result = 0;
-
-	for (i = 0; String[i] != '0' && flag != 2; i++)
+	i = 0;
+	while (src[i] != '\0' && i < n - 1)
 	{
-		if (String[i] == '-')
-			sign *= -1;
-
-		if (String[i] >= '0' && String[i] <= '9')
-		{
-			flag = 1;
-			result *= 10;
-			result += (String[i] - '0');
-		}
-		else if (flag == 1)
-			flag = 2;
+		dest[i] = src[i];
+		i++;
 	}
-
-	if (sign == -1)
-		output = -result;
-	else
-		output = result;
-
-	return (output);
+	if (i < n)
+	{
+		j = i;
+		while (j < n)
+		{
+			dest[j] = '\0';
+			j++;
+		}
+	}
+	return (s);
 }
 
 /**
- * _erratoi - A function that converts a string into an integer.
- *
- * @String: The string to be converted.
- *
- * Return: 0 if no number's in the string or the converted number. And
- *         -1 if there's an error.
-*/
-int _erratoi(char *String)
+ **_strncat - concatenates two strings
+ *@dest: the first string
+ *@src: the second string
+ *@n: the amount of bytes to be maximally used
+ *Return: the concatenated string
+ */
+char *_strncat(char *dest, char *src, int n)
 {
-	int i = 0;
-	unsigned long int result = 0;
+	int i, j;
+	char *s = dest;
 
-	if (*String == '+')
-		String++;
-	for (i = 0; String[i] != '\0'; i++)
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0' && j < n)
 	{
-		if (String[i] >= '0' && String[i] <= '9')
-		{
-			result *= 10;
-			result += (String[i] - '0');
-			if (result > INT_MAX)
-				return (-1);
-		}
-		else
-			return (-1);
+		dest[i] = src[j];
+		i++;
+		j++;
 	}
-
-	return (result);
+	if (j < n)
+		dest[i] = '\0';
+	return (s);
 }
 
 /**
- * _strtok - A function that splits a string into words.
- *
- * @String: The inputed string.
- * @Delimiter: The delimeter string.
- *
- * Return: A pointer to an array of strings or NULL on failure.
-*/
-char **_strtok(char *String, char *Delimiter)
+ **_strchr - locates a character in a string
+ *@s: the string to be parsed
+ *@c: the character to look for
+ *Return: (s) a pointer to the memory area s
+ */
+char *_strchr(char *s, char c)
 {
-	int i, j, k, l, numwords = 0;
-	char **string;
+	do {
+		if (*s == c)
+			return (s);
+	} while (*s++ != '\0');
 
-	if (String == NULL || String[0] == 0)
-		return (NULL);
-	if (!Delimiter)
-		Delimiter = " ";
-	for (i = 0; String[i] != '0'; i++)
-		if (!is_delim(String[i], Delimiter) &&
-		    (is_delim(String[i + 1], Delimiter) || !String[i + 1]))
-			numwords++;
-
-	if (numwords == 0)
-		return (NULL);
-	string = malloc(sizeof(char *) * (numwords + 1));
-	if (!string)
-		return (NULL);
-	for (i = 0, j = 0; j < numwords; j++)
-	{
-		while (is_delim(String[i], Delimiter))
-			i++;
-		k = 0;
-		while (!is_delim(String[i + k], Delimiter) && String[i + k])
-			k++;
-		string[j] = malloc(sizeof(char *) * (k + 1));
-		if (!string[j])
-		{
-			for (k = 0; k < j; k++)
-				free(string[k]);
-			free(string);
-			return (NULL);
-		}
-		for (l = 0; l < k; l++)
-			string[j][l] = String[i++];
-		string[j][l] = 0;
-	}
-	string[j] = NULL;
-	return (string);
+	return (NULL);
 }

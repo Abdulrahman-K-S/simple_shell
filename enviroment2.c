@@ -1,127 +1,93 @@
 #include "shell.h"
 
 /**
- * _setenv - A function that initializes a new environment variable or
- *            modify an existing one.
- *
- * @Info: The info struct.
- *
- * Return: Always (0).
-*/
-int _setenv(info_t *Info)
-{
-	if (Info->argc != 3)
-	{
-		_eputs("Incorrect number of arguements\n");
-		return (1);
-	}
-	if (__setenv(Info, Info->argv[1], Info->argv[2]))
-		return (0);
-	return (1);
-}
-
-/**
- * __setenv - A function that initializes a new environment variable or
- *            modify an existing one.
- *
- * @Info: The info struct.
- * @Var: The string env var property.
- * @Val: The string env var value.
- *
- * Return: Always (0).
-*/
-int __setenv(info_t *Info, char *Var, char *Val)
-{
-	char *Buffer = NULL;
-	list_t *Node;
-	char *ptr;
-
-	if (!Var || !Val)
-		return (0);
-
-	Buffer = malloc(_strlen(Var) + _strlen(Val) + 2);
-	if (!Buffer)
-		return (1);
-
-	_strcpy(Buffer, Var);
-	_strcat(Buffer, "=");
-	_strcat(Buffer, Val);
-
-	Node = Info->env;
-	while (Node)
-	{
-		ptr = _strstr(Node->str, Var);
-		if (ptr && *ptr == '=')
-		{
-			free(Node->str);
-			Node->str = Buffer;
-			Info->env_changed = 1;
-			return (0);
-		}
-
-		Node = Node->next;
-	}
-
-	add_node_end(&(Info->env), Buffer, 0);
-	free(Buffer);
-	Info->env_changed = 1;
-
-	return (0);
-}
-
-/**
- * _unsetenv - A function that removes an environment variable.
- *
- * @Info: The info struct.
- *
- * Return: (0) indicating a succes or (1) indicating a fail.
+ * get_environ - returns the string array copy of our environ
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
  */
-int _unsetenv(info_t *Info)
+char **get_environ(info_t *info)
 {
-	int i = 1;
-
-	if (Info->argc == 1)
+	if (!info->environ || info->env_changed)
 	{
-		_eputs("Too few arguements.\n");
-		return (1);
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
 	}
 
-	for (; i <= Info->argc; i++)
-		__unsetenv(Info, Info->argv[i]);
-	return (0);
+	return (info->environ);
 }
 
 /**
- * __unsetenv - A function that removes an environment variable.
- *
- * @Info: The info struct.
- * @Var: The string env var properties.
- *
- * Return: Always (0).
-*/
-int __unsetenv(info_t *Info, char *Var)
+ * _unsetenv - Remove an environment variable
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: 1 on delete, 0 otherwise
+ * @var: the string env var property
+ */
+int _unsetenv(info_t *info, char *var)
 {
-	list_t *Node = Info->env;
+	list_t *node = info->env;
 	size_t i = 0;
-	char *ptr;
+	char *p;
 
-	if (!Node || !Var)
+	if (!node || !var)
 		return (0);
 
-	while (Node)
+	while (node)
 	{
-		ptr = _strstr(Node->str, Var);
-		if (ptr && *ptr == '=')
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
 		{
-			Info->env_changed = delete_node_at_index(&(Info->env), i);
+			info->env_changed = delete_node_at_index(&(info->env), i);
 			i = 0;
-			Node = Info->env;
+			node = info->env;
 			continue;
 		}
-
-		Node = Node->next;
+		node = node->next;
 		i++;
 	}
+	return (info->env_changed);
+}
 
-	return (Info->env_changed);
+/**
+ * _setenv - Initialize a new environment variable,
+ *             or modify an existing one
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ * @var: the string env var property
+ * @value: the string env var value
+ *  Return: Always 0
+ */
+int _setenv(info_t *info, char *var, char *value)
+{
+	char *buf = NULL;
+	list_t *node;
+	char *p;
+
+	if (!var || !value)
+		return (0);
+
+	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	if (!buf)
+		return (1);
+	_strcpy(buf, var);
+	_strcat(buf, "=");
+	_strcat(buf, value);
+	node = info->env;
+	while (node)
+	{
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
+		{
+			free(node->str);
+			node->str = buf;
+			info->env_changed = 1;
+			return (0);
+		}
+		node = node->next;
+	}
+	add_node_end(&(info->env), buf, 0);
+	free(buf);
+	info->env_changed = 1;
+	return (0);
 }

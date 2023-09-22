@@ -1,194 +1,159 @@
 #include "shell.h"
 
 /**
- * add_node - A function that adds a node to the start of the list.
+ * add_node - adds a node to the start of the list
+ * @head: address of pointer to head node
+ * @str: str field of node
+ * @num: node index used by history
  *
- * @Head: The head of the linked list.
- * @String: The string to add into the node.
- * @num: The integer to add into the node.
- *
- * Return: A pointer to the new node added.
-*/
-list_t *add_node(list_t **Head, const char *String, int num)
+ * Return: size of list
+ */
+list_t *add_node(list_t **head, const char *str, int num)
 {
 	list_t *new_head;
 
-	if (!Head)
+	if (!head)
 		return (NULL);
-
 	new_head = malloc(sizeof(list_t));
 	if (!new_head)
 		return (NULL);
-
 	_memset((void *)new_head, 0, sizeof(list_t));
 	new_head->num = num;
-
-	if (String)
+	if (str)
 	{
-		new_head->str = _strdup(String);
+		new_head->str = _strdup(str);
 		if (!new_head->str)
 		{
 			free(new_head);
 			return (NULL);
 		}
 	}
-
-	new_head->next = *Head;
-	*Head = new_head;
-
+	new_head->next = *head;
+	*head = new_head;
 	return (new_head);
 }
 
 /**
- * add_node_end - A function that adds a node at the end of the list.
+ * add_node_end - adds a node to the end of the list
+ * @head: address of pointer to head node
+ * @str: str field of node
+ * @num: node index used by history
  *
- * @Head: Address of the head pointer.
- * @String: The string to add into the node.
- * @num: The number to add into the node.
- *
- * Return: Pointer to the new node.
-*/
-list_t *add_node_end(list_t **Head, const char *String, int num)
+ * Return: size of list
+ */
+list_t *add_node_end(list_t **head, const char *str, int num)
 {
-	list_t *newNode, *node;
+	list_t *new_node, *node;
 
-	if (!Head)
+	if (!head)
 		return (NULL);
 
-	node = *Head;
-	newNode = malloc(sizeof(list_t));
-	if (!newNode)
+	node = *head;
+	new_node = malloc(sizeof(list_t));
+	if (!new_node)
 		return (NULL);
-
-	_memset((void *)newNode, 0, sizeof(list_t));
-	newNode->num = num;
-	if (String)
+	_memset((void *)new_node, 0, sizeof(list_t));
+	new_node->num = num;
+	if (str)
 	{
-		newNode->str = _strdup(String);
-		if (!newNode->str)
+		new_node->str = _strdup(str);
+		if (!new_node->str)
 		{
-			free(newNode);
+			free(new_node);
 			return (NULL);
 		}
 	}
-
 	if (node)
 	{
 		while (node->next)
 			node = node->next;
-		node->next = newNode;
+		node->next = new_node;
 	}
 	else
-		*Head = newNode;
-
-	return (newNode);
+		*head = new_node;
+	return (new_node);
 }
 
 /**
- * delete_node_at_index - A function that deletes a node at a specific index.
+ * print_list_str - prints only the str element of a list_t linked list
+ * @h: pointer to first node
  *
- * @Head: The head of the linked list.
- * @Index: The index node to delete.
- *
- * Return: 1 on success, 0 if there's an error.
-*/
-int delete_node_at_index(list_t **Head, unsigned int Index)
+ * Return: size of list
+ */
+size_t print_list_str(const list_t *h)
 {
-	list_t *node, *prevNode;
+	size_t i = 0;
+
+	while (h)
+	{
+		_puts(h->str ? h->str : "(nil)");
+		_puts("\n");
+		h = h->next;
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * delete_node_at_index - deletes node at given index
+ * @head: address of pointer to first node
+ * @index: index of node to delete
+ *
+ * Return: 1 on success, 0 on failure
+ */
+int delete_node_at_index(list_t **head, unsigned int index)
+{
+	list_t *node, *prev_node;
 	unsigned int i = 0;
 
-	if (!Head || !*Head)
+	if (!head || !*head)
 		return (0);
 
-	if (!Index)
+	if (!index)
 	{
-		node = *Head;
-		*Head = (*Head)->next;
+		node = *head;
+		*head = (*head)->next;
 		free(node->str);
 		free(node);
 		return (1);
 	}
-
-	node = *Head;
+	node = *head;
 	while (node)
 	{
-		if (i == Index)
+		if (i == index)
 		{
-			prevNode->next = node->next;
+			prev_node->next = node->next;
 			free(node->str);
 			free(node);
 			return (1);
 		}
 		i++;
-		prevNode = node;
+		prev_node = node;
 		node = node->next;
 	}
-
 	return (0);
 }
 
 /**
- * list_to_strings - A function that returns an array of strings from the
- *                   linked list.
+ * free_list - frees all nodes of a list
+ * @head_ptr: address of pointer to head node
  *
- * @Head: The head of the linked list.
- *
- * Return: An array of strings.
-*/
-char **list_to_strings(list_t *Head)
+ * Return: void
+ */
+void free_list(list_t **head_ptr)
 {
-	list_t *node = Head;
-	size_t i = list_len(Head), j;
-	char **Strings, *String;
+	list_t *node, *next_node, *head;
 
-	if (!Head || !i)
-		return (NULL);
-
-	Strings = malloc(sizeof(char *) * (i + 1));
-	if (!Strings)
-		return (NULL);
-
-	for (i = 0; node; node = node->next, i++)
+	if (!head_ptr || !*head_ptr)
+		return;
+	head = *head_ptr;
+	node = head;
+	while (node)
 	{
-		String = malloc(_strlen(node->str) + 1);
-		if (!String)
-		{
-			for (j = 0; j < i; j++)
-				free(Strings[j]);
-			free(Strings);
-			return (NULL);
-		}
-
-		String = _strcpy(String, node->str);
-		Strings[i] = String;
+		next_node = node->next;
+		free(node->str);
+		free(node);
+		node = next_node;
 	}
-
-	Strings[i] = NULL;
-	return (Strings);
-}
-
-/**
- * node_starts_with - A function that returns the node that has a string
- *                    with the entered prefex.
- *
- * @Head: The head pointer of the linked list.
- * @Prefex: The string to match.
- * @Character: The next character after the prefex to match.
- *
- * Return: The node if found otherwise NULL.
-*/
-list_t *node_starts_with(list_t *Head, char *Prefex, char Character)
-{
-	char *ptr = NULL;
-
-	while (Head)
-	{
-		ptr = _strstr(Head->str, Prefex);
-
-		if (ptr && ((Character == -1) || (*ptr == Character)))
-			return (Head);
-		Head = Head->next;
-	}
-
-	return (NULL);
+	*head_ptr = NULL;
 }

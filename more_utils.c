@@ -1,109 +1,74 @@
 #include "shell.h"
 
 /**
- * interactive - A function that returns true if the shell is in
- *               interactive mode.
+ * interactive - returns true if shell is interactive mode
+ * @info: struct address
  *
- * @info: The struct address.
- *
- * Return: 1 if in interactive mode otherwise 0.
-*/
+ * Return: 1 if interactive mode, 0 otherwise
+ */
 int interactive(info_t *info)
 {
 	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * print_d - A function that prints a decimal number (base 10).
- *
- * @Input: The input to print.
- * @File: The file descriptor to write to.
- *
- * Return: The number of characters printed.
-*/
-int print_d(int Input, int File)
+ * is_delim - checks if character is a delimeter
+ * @c: the char to check
+ * @delim: the delimeter string
+ * Return: 1 if true, 0 if false
+ */
+int is_delim(char c, char *delim)
 {
-	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	while (*delim)
+		if (*delim++ == c)
+			return (1);
+	return (0);
+}
 
-	if (File == STDERR_FILENO)
-		__putchar = _eputchar;
-	if (Input < 0)
-	{
-		_abs_ = -Input;
-		__putchar('-');
-		count++;
-	}
+/**
+ *_isalpha - checks for alphabetic character
+ *@c: The character to input
+ *Return: 1 if c is alphabetic, 0 otherwise
+ */
+
+int _isalpha(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
 	else
-		_abs_ = Input;
-	current = _abs_;
-
-	for (i = 1000000000; i > 1; i /= 10)
-	{
-		if (_abs_ / i)
-		{
-			__putchar('0' + current / i);
-			count++;
-		}
-		current %= i;
-	}
-	__putchar('0' + current);
-	count++;
-
-	return (count);
+		return (0);
 }
 
 /**
- * convert_number - A converter function that converts the number into string.
- *
- * @Number: The number.
- * @Base: The base to be divided on.
- * @Flag: The argument flag.
- *
- * Return: The converted number into a string.
-*/
-char *convert_number(long int Number, int Base, int Flag)
-{
-	static char *array;
-	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = Number;
+ *_atoi - converts a string to an integer
+ *@s: the string to be converted
+ *Return: 0 if no numbers in string, converted number otherwise
+ */
 
-	if (!(Flag & CONVERT_UNSIGNED) && Number < 0)
+int _atoi(char *s)
+{
+	int i, sign = 1, flag = 0, output;
+	unsigned int result = 0;
+
+	for (i = 0;  s[i] != '\0' && flag != 2; i++)
 	{
-		n = -Number;
-		sign = '-';
-	}
-	array = Flag & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
+		if (s[i] == '-')
+			sign *= -1;
 
-	do {
-		*--ptr = array[n % Base];
-		n /= Base;
-	} while (n != 0);
-
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
-}
-
-/**
- * remove_comments - A function that replaces the first instance of
- *                   '#' with a '\0'.
- *
- * @Buffer: The address of the string to be modifed. (aka the input)
-*/
-void remove_comments(char *Buffer)
-{
-	int i;
-
-	for (i = 0; Buffer[i] != '\0'; i++)
-		if (Buffer[i] == '#' && (!i || Buffer[i - 1] == ' '))
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			Buffer[i] = '\0';
-			break;
+			flag = 1;
+			result *= 10;
+			result += (s[i] - '0');
 		}
+		else if (flag == 1)
+			flag = 2;
+	}
+
+	if (sign == -1)
+		output = -result;
+	else
+		output = result;
+
+	return (output);
 }

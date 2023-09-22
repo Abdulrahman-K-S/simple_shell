@@ -1,116 +1,97 @@
 #include "shell.h"
 
 /**
- * _exitshell - A function that exits the shell.
- *
- * @Info: The info struct.
- *
- * Return: Exits with a given exit status
+ * _myexit - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: exits with a given exit status
  *         (0) if info.argv[0] != "exit"
-*/
-int _exitshell(info_t *Info)
+ */
+int _myexit(info_t *info)
 {
-	int exitCheck;
+	int exitcheck;
 
-	if (Info->argv[1])
+	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exitCheck = _erratoi(Info->argv[1]);
-
-		if (exitCheck == -1)
+		exitcheck = _erratoi(info->argv[1]);
+		if (exitcheck == -1)
 		{
-			Info->status = 2;
-			print_error(Info, "Illegal number: ");
-			_eputs(Info->argv[1]);
+			info->status = 2;
+			print_error(info, "Illegal number: ");
+			_eputs(info->argv[1]);
 			_eputchar('\n');
 			return (1);
 		}
-
-		Info->err_num = _erratoi(Info->argv[1]);
+		info->err_num = _erratoi(info->argv[1]);
 		return (-2);
 	}
-
-	Info->err_num = -1;
+	info->err_num = -1;
 	return (-2);
 }
 
 /**
- * _cd - A function that changes current working directory.
- *
- * @Info: The info struct.
- *
- * Return: Always (0).
-*/
-int _cd(info_t *Info)
+ * _mycd - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: Always 0
+ */
+int _mycd(info_t *info)
 {
-	char *String, *Dir, Buffer[1024];
+	char *s, *dir, buffer[1024];
 	int chdir_ret;
 
-	String = getcwd(Buffer, 1024);
-	if (!String)
-		print_error(Info, "No such file or directory\n");
-	if (!Info->argv[1])
+	s = getcwd(buffer, 1024);
+	if (!s)
+		_puts("TODO: >>getcwd failure emsg here<<\n");
+	if (!info->argv[1])
 	{
-		Dir = _getenv(Info, "Home=");
-		if (!Dir)
-			chdir_ret = chdir((Dir = _getenv(Info, "PWD=")) ?
-					  Dir : "/");
+		dir = _getenv(info, "HOME=");
+		if (!dir)
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
-			chdir_ret = chdir(Dir);
+			chdir_ret = chdir(dir);
 	}
-	else if (_strcmp(Info->argv[1], "-") == 0)
+	else if (_strcmp(info->argv[1], "-") == 0)
 	{
-		if (!_getenv(Info, "OLDPWD="))
+		if (!_getenv(info, "OLDPWD="))
 		{
-			_puts(String);
+			_puts(s);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(Info, "OLDPWD=")), _putchar('\n');
-		chdir_ret = chdir((Dir = _getenv(Info, "OLDPWD=")) ? Dir : "/");
+		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
-		chdir_ret = chdir(Info->argv[1]);
-
+		chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
 	{
-		print_error(Info, "can't cd to ");
-		_eputs(Info->argv[1]), _eputchar('\n');
+		print_error(info, "can't cd to ");
+		_eputs(info->argv[1]), _eputchar('\n');
 	}
 	else
 	{
-		__setenv(Info, "OLDPWD", _getenv(Info, "PWD="));
-		__setenv(Info, "PWD", getcwd(Buffer, 1024));
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
 
 /**
- * _help - A function that displayes a helping message.
- *
- * @Info: The info struct.
- *
- * Return: Always (0).
-*/
-int _help(info_t *Info)
+ * _myhelp - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: Always 0
+ */
+int _myhelp(info_t *info)
 {
-	char **argvArray;
+	char **arg_array;
 
-	argvArray = Info->argv;
-	_puts("Help call works. Function not yet implemented\n");
+	arg_array = info->argv;
+	_puts("help call works. Function not yet implemented \n");
 	if (0)
-		_puts(*argvArray);
-	return (0);
-}
-
-/**
- * _history - A function that displayes the history list.
- *
- * @Info: The info struct.
- *
- * Return: Always (0).
-*/
-int _history(info_t *Info)
-{
-	print_list(Info->history);
+		_puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }

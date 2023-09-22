@@ -1,93 +1,86 @@
 #include "shell.h"
 
 /**
- * find_path - A function that finds the cmd in the path string.
+ * is_cmd - determines if a file is an executable command
+ * @info: the info struct
+ * @path: path to the file
  *
- * @Info: The info struct.
- * @PathSTRING: The PATH string.
- * @cmd: The cmd to find.
- *
- * Return: The full path of cmd if found otherwise NULL.
-*/
-char *find_path(info_t *Info, char *PathSTRING, char *cmd)
-{
-	int i = 0, currentPosition = 0;
-	char *PATH;
-
-	if (!PathSTRING)
-		return (NULL);
-	if ((_strlen(cmd) > 2) && _strstr(cmd, "./"))
-	{
-		if (is_cmd(Info, cmd))
-			return (cmd);
-	}
-
-	while (1)
-	{
-		if (!PathSTRING[i] || PathSTRING[i] == ':')
-		{
-			PATH = dup_chars(PathSTRING, currentPosition, i);
-			if (!*PATH)
-				_strcat(PATH, cmd);
-			else
-			{
-				_strcat(PATH, "/");
-				_strcat(PATH, cmd);
-			}
-			if (is_cmd(Info, PATH))
-				return (PATH);
-			if (!PathSTRING[i])
-				break;
-
-			currentPosition = i;
-		}
-
-		i++;
-	}
-	return (NULL);
-}
-
-/**
- * is_cmd - A function that determines if a file is an exectuable command
- *          or not.
- *
- * @Info: The info struct.
- * @Path: The path string.
- *
- * Return: 1 if true otherwise 0.
-*/
-int is_cmd(info_t *Info, char *Path)
+ * Return: 1 if true, 0 otherwise
+ */
+int is_cmd(info_t *info, char *path)
 {
 	struct stat st;
 
-	(void)Info;
-	if (!Path || stat(Path, &st))
+	(void)info;
+	if (!path || stat(path, &st))
 		return (0);
 
 	if (st.st_mode & S_IFREG)
+	{
 		return (1);
-
+	}
 	return (0);
 }
 
 /**
- * dup_chars - A function that duplicates characters.
+ * dup_chars - duplicates characters
+ * @pathstr: the PATH string
+ * @start: starting index
+ * @stop: stopping index
  *
- * @PathSTRING: The path string.
- * @Start: The starting index.
- * @Stop: The stopping index.
- *
- * Return: Pointer to a new buffer.
-*/
-char *dup_chars(char *PathSTRING, int Start, int Stop)
+ * Return: pointer to new buffer
+ */
+char *dup_chars(char *pathstr, int start, int stop)
 {
-	static char Buffer[1024];
+	static char buf[1024];
 	int i = 0, k = 0;
 
-	for (k = 0, i = Start; i < Stop; i++)
-		if (PathSTRING[i] != ':')
-			Buffer[k++] = PathSTRING[i];
+	for (k = 0, i = start; i < stop; i++)
+		if (pathstr[i] != ':')
+			buf[k++] = pathstr[i];
+	buf[k] = 0;
+	return (buf);
+}
 
-	Buffer[k] = 0;
-	return (Buffer);
+/**
+ * find_path - finds this cmd in the PATH string
+ * @info: the info struct
+ * @pathstr: the PATH string
+ * @cmd: the cmd to find
+ *
+ * Return: full path of cmd if found or NULL
+ */
+char *find_path(info_t *info, char *pathstr, char *cmd)
+{
+	int i = 0, curr_pos = 0;
+	char *path;
+
+	if (!pathstr)
+		return (NULL);
+	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	{
+		if (is_cmd(info, cmd))
+			return (cmd);
+	}
+	while (1)
+	{
+		if (!pathstr[i] || pathstr[i] == ':')
+		{
+			path = dup_chars(pathstr, curr_pos, i);
+			if (!*path)
+				_strcat(path, cmd);
+			else
+			{
+				_strcat(path, "/");
+				_strcat(path, cmd);
+			}
+			if (is_cmd(info, path))
+				return (path);
+			if (!pathstr[i])
+				break;
+			curr_pos = i;
+		}
+		i++;
+	}
+	return (NULL);
 }

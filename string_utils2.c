@@ -1,99 +1,87 @@
 #include "shell.h"
 
 /**
- * _strstr - A functions that finds the given substring in the string.
+ * _strcpy - copies a string
+ * @dest: the destination
+ * @src: the source
  *
- * @_String: The string to be searched. (const)
- * @_SubString: The substring to find. (const)
- *
- * Return: the address of next char of _String or null.
-*/
-char *_strstr(const char *_String, const char *_SubString)
+ * Return: pointer to destination
+ */
+char *_strcpy(char *dest, char *src)
 {
-	while (*_SubString)
-		if (*_SubString++ != *_String++)
-			return (NULL);
-	return ((char *)_String);
+	int i = 0;
+
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
 }
 
 /**
- * _strncpy - A function that copies a string.
+ * _strdup - duplicates a string
+ * @str: the string to duplicate
  *
- * @Destination: The destinatoin string to be copied to.
- * @Source: The source string.
- * @n: The amount of characters to be copied.
- *
- * Return: The concatenated string.
-*/
-char *_strncpy(char *Destination, char *Source, int n)
+ * Return: pointer to the duplicated string
+ */
+char *_strdup(const char *str)
 {
-	int i, j;
-	char *string = Destination;
+	int length = 0;
+	char *ret;
 
-	i = 0;
-	while (Source[i] != '\0' && i < n - 1)
-	{
-		Destination[i] = Source[i];
-		i++;
-	}
-
-	if (i < n)
-	{
-		j = i;
-		while (j < n)
-		{
-			Destination[j] = '\0';
-			j++;
-		}
-	}
-
-	return (string);
+	if (str == NULL)
+		return (NULL);
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
 }
 
 /**
- * _strncat - A function that concatenates two string.
+ *_puts - prints an input string
+ *@str: the string to be printed
  *
- * @Destination: The first string.
- * @Source: The second string.
- * @n: The amount of bytes to be taken from the source.
- *
- * Return: The concatenated string.
-*/
-char *_strncat(char *Destination, char *Source, int n)
+ * Return: Nothing
+ */
+void _puts(char *str)
 {
-	int i = 0, j = 0;
-	char *string = Destination;
+	int i = 0;
 
-	while (Destination[i] != '0')
-		i++;
-
-	while (Source[j] != '\0' && j < n)
+	if (!str)
+		return;
+	while (str[i] != '\0')
 	{
-		Destination[i] = Source[j];
+		_putchar(str[i]);
 		i++;
-		j++;
 	}
-
-	if (j < n)
-		Destination[i] = '0';
-
-	return (string);
 }
 
 /**
- * _strchr - A function that locates a character in a string.
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
  *
- * @String: The string to be searched.
- * @Character: The character to look for.
- *
- * Return: A pointer to the memory area String.
-*/
-char *_strchr(char *String, char Character)
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
 {
-	do {
-		if (*String == Character)
-			return (String);
-	} while (*String++ != '0');
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-	return (NULL);
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }

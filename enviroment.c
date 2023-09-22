@@ -1,76 +1,92 @@
 #include "shell.h"
 
 /**
- * _printenv - A function that prints the current environment.
- *
- * @Info: The info struct.
- *
- * Return: Always (0).
-*/
-int _printenv(info_t *Info)
+ * _myenv - prints the current environment
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
+ */
+int _myenv(info_t *info)
 {
-	print_list_str(Info->env);
+	print_list_str(info->env);
 	return (0);
 }
 
 /**
- * _getenv - A function that gets the value of an eviron variable.
+ * _getenv - gets the value of an environ variable
+ * @info: Structure containing potential arguments. Used to maintain
+ * @name: env var name
  *
- * @Info: The info struct.
- * @Name: The env var name to look for.
- *
- * Return: The value if found otherwise NULL.
-*/
-char *_getenv(info_t *Info, const char *Name)
+ * Return: the value
+ */
+char *_getenv(info_t *info, const char *name)
 {
-	list_t *Node = Info->env;
-	char *ptr;
+	list_t *node = info->env;
+	char *p;
 
-	while (Node)
+	while (node)
 	{
-		ptr = _strstr(Node->str, Name);
-
-		if (ptr && *ptr)
-			return (ptr);
-		Node = Node->next;
+		p = starts_with(node->str, name);
+		if (p && *p)
+			return (p);
+		node = node->next;
 	}
-
 	return (NULL);
 }
 
 /**
- * populate_env_list - A function that populates env linked list
- *
- * @Info: The info struct.
- *
- * Return: Always 0
-*/
-int populate_env_list(info_t *Info)
+ * _mysetenv - Initialize a new environment variable,
+ *             or modify an existing one
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: Always 0
+ */
+int _mysetenv(info_t *info)
 {
-	list_t *Node = NULL;
-	size_t i;
+	if (info->argc != 3)
+	{
+		_eputs("Incorrect number of arguements\n");
+		return (1);
+	}
+	if (_setenv(info, info->argv[1], info->argv[2]))
+		return (0);
+	return (1);
+}
 
-	for (i = 0; environ[i]; i++)
-		add_node_end(&Node, environ[i], 0);
-	Info->env = Node;
+/**
+ * _myunsetenv - Remove an environment variable
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: Always 0
+ */
+int _myunsetenv(info_t *info)
+{
+	int i;
+
+	if (info->argc == 1)
+	{
+		_eputs("Too few arguements.\n");
+		return (1);
+	}
+	for (i = 1; i <= info->argc; i++)
+		_unsetenv(info, info->argv[i]);
+
 	return (0);
 }
 
 /**
- * get_environ - A function that returns a string array copy
- *               of the environ in the Info struct.
- *
- * @Info: The info struct.
- *
- * Return: Always (0).
-*/
-char **get_environ(info_t *Info)
+ * populate_env_list - populates env linked list
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ * Return: Always 0
+ */
+int populate_env_list(info_t *info)
 {
-	if (!Info->environ || Info->env_changed)
-	{
-		Info->environ = list_to_strings(Info->env);
-		Info->env_changed = 0;
-	}
+	list_t *node = NULL;
+	size_t i;
 
-	return (Info->environ);
+	for (i = 0; environ[i]; i++)
+		add_node_end(&node, environ[i], 0);
+	info->env = node;
+	return (0);
 }
