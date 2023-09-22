@@ -8,7 +8,7 @@
  * Return: Exits with a given exit status
  *         (0) if info.argv[0] != "exit"
 */
-int _exit(info_t *Info)
+int _exitshell(info_t *Info)
 {
 	int exitCheck;
 
@@ -52,11 +52,12 @@ int _cd(info_t *Info)
 	{
 		Dir = _getenv(Info, "Home=");
 		if (!Dir)
-			chdir_ret = chdir((Dir = _getenv(Info, "PWD=")) ? Dir : "/");
+			chdir_ret = chdir((Dir = _getenv(Info, "PWD=")) ?
+					  Dir : "/");
 		else
 			chdir_ret = chdir(Dir);
 	}
-	else if (_strcmp(Info->argv[i], "-") == 0)
+	else if (_strcmp(Info->argv[1], "-") == 0)
 	{
 		if (!_getenv(Info, "OLDPWD="))
 		{

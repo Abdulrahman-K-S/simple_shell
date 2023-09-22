@@ -217,7 +217,7 @@ void remove_comments(char *);
 /*   isit_built.c Modules   */
 /* ======================== */
 
-int _exit(info_t *);
+int _exitshell(info_t *);
 int _cd(info_t *);
 int _help(info_t *);
 int _history(info_t *);
