@@ -27,6 +27,8 @@
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
 
+extern char **environ;
+
 /**
  * struct liststr - singly linked list
  *

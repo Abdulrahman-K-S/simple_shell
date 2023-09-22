@@ -44,7 +44,7 @@ int __setenv(info_t *Info, char *Var, char *Val)
 		return (1);
 
 	_strcpy(Buffer, Var);
-	_Strcat(Buffer, "=");
+	_strcat(Buffer, "=");
 	_strcat(Buffer, Val);
 
 	Node = Info->env;
