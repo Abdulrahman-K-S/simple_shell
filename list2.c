@@ -35,7 +35,7 @@ size_t print_list(const list_t *Head)
 
 	while (Head)
 	{
-		_puts(conver_number(Head->num, 10, 0));
+		_puts(convert_number(Head->num, 10, 0));
 		_putchar(':');
 		_putchar(' ');
 		_puts(Head->str ? Head->str : "(nil)");
