@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _exit - A function that exits the shell.
+ * _exitshell - A function that exits the shell.
  *
  * @Info: The info struct.
  *

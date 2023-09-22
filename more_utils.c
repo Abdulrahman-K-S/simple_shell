@@ -55,7 +55,7 @@ int print_d(int Input, int File)
 }
 
 /**
- * conver_number - A converter function that converts the number into string.
+ * convert_number - A converter function that converts the number into string.
  *
  * @Number: The number.
  * @Base: The base to be divided on.
