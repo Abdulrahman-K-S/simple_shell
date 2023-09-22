@@ -147,6 +147,14 @@ void freeStrings(char **);
 int freeNull(void **);
 void *_realloc(void *, unsigned int, unsigned int);
 
+/* ==================== */
+/*    path.c Modules    */
+/* ==================== */
+
+char *find_path(info_t *, char *, char *);
+int is_cmd(info_t *, char *);
+char *dup_chars(char *, int , int );
+
 /* =================== */
 /*  history.c Modules  */
 /* =================== */
