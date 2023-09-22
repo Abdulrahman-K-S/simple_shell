@@ -13,11 +13,6 @@
 #include <fcntl.h>
 #include <errno.h>
 
-/* Defined vars */
-#define PROMPT "$ "
-#define DELIMETER " \n"
-#define ERROR "./shell: No such file or directory\n"
-
 /* For read/write buffers */
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
@@ -26,6 +21,10 @@
 /* for convert_number() */
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
+
+/* For the history.c */
+#define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	4096
 
 extern char **environ;
 
@@ -65,7 +64,7 @@ void free_list(list_t **);
 
 /**
  * struct passinfo - contains pseudo-arguements to pass into a function,
- *					allowing uniform prototype for function pointer struct
+ *		      allowing uniform prototype for function pointer struct
  * @arg: a string generated from getline containing arguements
  * @argv: an array of strings generated from arg
  * @path: a string path for the current command
@@ -113,23 +112,31 @@ typedef struct passinfo
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
 
+/* ======================== */
+/*   info_list.c Modules    */
+/* ======================== */
+
+void set_info_list(info_t *, char **);
+void clear_info_list(info_t *);
+void free_info_list(info_t *, int);
+
 /* ======================= */
 /*  enviroment.c Modules   */
 /* ======================= */
 
-int _printenv(info_t *Info);
-char *_getenv(info_t *Info, const char *Name);
-int populate_env_list(info_t *Info);
-char **get_environ(info_t *Info);
+int _printenv(info_t *);
+char *_getenv(info_t *, const char *);
+int populate_env_list(info_t *);
+char **get_environ(info_t *);
 
 /* ======================== */
 /*  enviroment2.c Modules   */
 /* ======================== */
 
-int _setenv(info_t *Info);
-int __setenv(info_t *Info, char *Var, char *Val);
-int _unsetenv(info_t *Info);
-int __unsetenv(info_t *Info, char *Var);
+int _setenv(info_t *);
+int __setenv(info_t *, char *, char *);
+int _unsetenv(info_t *);
+int __unsetenv(info_t *, char *);
 
 /* ==================== */
 /* memorytime.c Modules */
@@ -139,6 +146,16 @@ char *_memset(char *, char, unsigned int);
 void freeStrings(char **);
 int freeNull(void **);
 void *_realloc(void *, unsigned int, unsigned int);
+
+/* =================== */
+/*  history.c Modules  */
+/* =================== */
+
+int build_history(info_t *, char *, int);
+char *get_history_file(info_t *);
+int write_history(info_t *);
+int read_history(info_t *);
+int renumber_history(info_t *);
 
 /* =========================== */
 /*  error_functions.c Modules  */
@@ -194,14 +211,5 @@ int interactive(info_t *);
 int print_d(int, int);
 char *conver_number(long int, int, int);
 void remove_comments(char *);
-
-
-/* ======================== */
-/*   info_list.c Modules    */
-/* ======================== */
-
-void set_info_list(info_t , char *);
-void clear_info_list(info_t *);
-void free_info_list(info_t *, int);
 
 #endif
