@@ -165,6 +165,7 @@ void _eputs(char *);
 int _eputchar(char);
 int _putsfd(char *, int);
 int _putfd(char, int);
+void print_error(info_t *, char *);
 
 /* ==================== */
 /*  printers.c Modules  */

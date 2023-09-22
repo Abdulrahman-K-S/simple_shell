@@ -86,3 +86,20 @@ int _putfd(char Character, int File)
 
 	return (1);
 }
+
+/**
+ * print_error - A function that prints an error message.
+ *
+ * @Info: The info struct.
+ * @errorString: The error string.
+*/
+void print_error(info_t *Info, char *errorString)
+{
+	_eputs(Info->fname);
+	_eputs(": ");
+	print_d(Info->line_count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(Info->argv[0]);
+	_eputs(": ");
+	_eputs(errorString);
+}
