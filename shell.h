@@ -111,6 +111,24 @@ typedef struct passinfo
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
 
+/* ======================= */
+/*  enviroment.c Modules   */
+/* ======================= */
+
+int _printenv(info_t *Info);
+char *_getenv(info_t *Info, const char *Name);
+int populate_env_list(info_t *Info);
+char **get_environ(info_t *Info);
+
+/* ======================== */
+/*  enviroment2.c Modules   */
+/* ======================== */
+
+int _setenv(info_t *Info);
+int __setenv(info_t *Info, char *Var, char *Val);
+int _unsetenv(info_t *Info);
+int __unsetenv(info_t *Info, char *Var);
+
 /* ==================== */
 /* memorytime.c Modules */
 /* ==================== */
