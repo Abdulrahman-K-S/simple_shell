@@ -195,4 +195,13 @@ int print_d(int, int);
 char *conver_number(long int, int, int);
 void remove_comments(char *);
 
+
+/* ======================== */
+/*   info_list.c Modules    */
+/* ======================== */
+
+void set_info_list(info_t , char *);
+void clear_info_list(info_t *);
+void free_info_list(info_t *, int);
+
 #endif
