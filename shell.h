@@ -218,7 +218,7 @@ char **_strtok(char *, char *);
 
 int interactive(info_t *);
 int print_d(int, int);
-char *conver_number(long int, int, int);
+char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 /* ======================== */

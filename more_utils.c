@@ -63,7 +63,7 @@ int print_d(int Input, int File)
  *
  * Return: The converted number into a string.
 */
-char *conver_number(long int Number, int Base, int Flag)
+char *convert_number(long int Number, int Base, int Flag)
 {
 	static char *array;
 	static char buffer[50];
