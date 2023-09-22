@@ -129,6 +129,26 @@ void set_info_list(info_t *, char **);
 void clear_info_list(info_t *);
 void free_info_list(info_t *, int);
 
+/**
+ *struct builtin - contains a builtin string and related function
+ *@type: the builtin command flag
+ *@func: the function
+ */
+typedef struct builtin
+{
+	char *type;
+	int (*func)(info_t *);
+} builtin_table;
+
+/* =================== */
+/*   shell.c Modules   */
+/* =================== */
+
+int startSHELL(info_t *, char **);
+int find_builtint(info_t *);
+void find_cmd(info_t *);
+void fork_cmd(info_t *);
+
 /* ======================= */
 /*  enviroment.c Modules   */
 /* ======================= */
