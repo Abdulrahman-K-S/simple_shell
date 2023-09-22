@@ -28,6 +28,9 @@
 #define CMD_AND		2
 #define CMD_CHAIN	3
 
+/* 1 if using system getline() */
+#define USE_GETLINE 0
+
 /* For the history.c */
 #define HIST_FILE	".simple_shell_history"
 #define HIST_MAX	4096
@@ -107,7 +110,7 @@ typedef struct passinfo
 	int env_changed;
 	int status;
 
-	char *cmd_buf; /*pointer to cmd ; chain buffer, for memory mangement */
+	char **cmd_buf; /*pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 	int histcount;
@@ -188,6 +191,15 @@ void print_error(info_t *, char *);
 int _putchar(char);
 void _puts(char *);
 
+/* ===================== */
+/*   getline.c Modules   */
+/* ===================== */
+
+ssize_t input_buffer(info_t *, char **, size_t *);
+ssize_t get_input(info_t *);
+ssize_t read_buffer(info_t *, char *, size_t *);
+int _getline(info_t *, char **, size_t *);
+void sigintHandler(__attribute__((unused))int);
 
 /* ====================== */
 /* string_utils.c Modules */
