@@ -213,4 +213,22 @@ int print_d(int, int);
 char *conver_number(long int, int, int);
 void remove_comments(char *);
 
+/* ======================== */
+/*   isit_built.c Modules   */
+/* ======================== */
+
+int _exit(info_t *);
+int _cd(info_t *);
+int _help(info_t *);
+int _history(info_t *);
+
+/* ========================= */
+/*   isit_built2.c Modules   */
+/* ========================= */
+
+int set_alias(info_t *, char *);
+int unset_alias(info_t *, char *);
+int print_alias(list_t *);
+int _alias(info_t *);
+
 #endif
