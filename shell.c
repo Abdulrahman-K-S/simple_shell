@@ -45,14 +45,14 @@ int startSHELL(info_t *Info, char **argv)
 }
 
 /**
- * find_builtint - A function that finds a builtin command.
+ * find_builtin - A function that finds a builtin command.
  *
  * @Info: The info struct.
  *
  * Return: -1 if not built-in, 0 if built-in, 1 if builtin found but
  *         not succesful or -2 if built-in signals exit().
 */
-int find_builtint(info_t *Info)
+int find_builtin(info_t *Info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {

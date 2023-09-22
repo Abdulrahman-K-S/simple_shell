@@ -145,7 +145,7 @@ typedef struct builtin
 /* =================== */
 
 int startSHELL(info_t *, char **);
-int find_builtint(info_t *);
+int find_builtin(info_t *);
 void find_cmd(info_t *);
 void fork_cmd(info_t *);
 
