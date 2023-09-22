@@ -40,6 +40,26 @@ struct directories
 	struct directories *next;
 };
 
+/* ======================== */
+/*      list.c Modules      */
+/* ======================== */
+
+list_t *add_node(list_t **, const char *, int);
+list_t *add_node_end(list_t **, const char *, int);
+int delete_node_at_index(list_t **, unsigned int);
+char **list_to_strings(list_t *);
+list_t *node_starts_with(list_t *, char *, char);
+
+/* ======================== */
+/*      list2.c Modules     */
+/* ======================== */
+
+size_t print_list_str(const list_t *);
+size_t print_list(const list_t *);
+size_t list_len(const list_t *);
+ssize_t get_node_index(list_t *, list_t *);
+void free_list(list_t **);
+
 /* ==================== */
 /* memorytime.c Modules */
 /* ==================== */
@@ -71,7 +91,7 @@ char *_strdup(const char *);
 /* string_utils2.c Modules */
 /* ======================= */
 
-char *strstr(const char *, const char *);
+char *_strstr(const char *, const char *);
 char *_strncat(char *, char *, int);
 char *_strncpy(char *, char *, int);
 char *_strchr(char *, char);
