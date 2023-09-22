@@ -69,6 +69,15 @@ void freeStrings(char **);
 int freeNull(void **);
 void *_realloc(void *, unsigned int, unsigned int);
 
+/* =========================== */
+/*  error_functions.c Modules  */
+/* =========================== */
+
+void _eputs(char *);
+int _eputchar(char );
+int _putsfd(char *, int);
+int _putfd(char , int);
+
 /* ==================== */
 /*  printers.c Modules  */
 /* ==================== */
