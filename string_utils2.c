@@ -2,86 +2,86 @@
 
 /**
  * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
+ * @Destination: the destination
+ * @Soruce: the source
  *
  * Return: pointer to destination
  */
-char *_strcpy(char *dest, char *src)
+char *_strcpy(char *Destination, char *Soruce)
 {
 	int i = 0;
 
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
+	if (Destination == Soruce || Soruce == 0)
+		return (Destination);
+	while (Soruce[i])
 	{
-		dest[i] = src[i];
+		Destination[i] = Soruce[i];
 		i++;
 	}
-	dest[i] = 0;
-	return (dest);
+	Destination[i] = 0;
+	return (Destination);
 }
 
 /**
  * _strdup - duplicates a string
- * @str: the string to duplicate
+ * @_String: the string to duplicate
  *
  * Return: pointer to the duplicated string
  */
-char *_strdup(const char *str)
+char *_strdup(const char *_String)
 {
 	int length = 0;
 	char *ret;
 
-	if (str == NULL)
+	if (_String == NULL)
 		return (NULL);
-	while (*str++)
+	while (*_String++)
 		length++;
 	ret = malloc(sizeof(char) * (length + 1));
 	if (!ret)
 		return (NULL);
 	for (length++; length--;)
-		ret[length] = *--str;
+		ret[length] = *--_String;
 	return (ret);
 }
 
 /**
  *_puts - prints an input string
- *@str: the string to be printed
+ *@String: the string to be printed
  *
  * Return: Nothing
  */
-void _puts(char *str)
+void _puts(char *String)
 {
 	int i = 0;
 
-	if (!str)
+	if (!String)
 		return;
-	while (str[i] != '\0')
+	while (String[i] != '\0')
 	{
-		_putchar(str[i]);
+		_putchar(String[i]);
 		i++;
 	}
 }
 
 /**
  * _putchar - writes the character c to stdout
- * @c: The character to print
+ * @Character: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _putchar(char c)
+int _putchar(char Character)
 {
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (Character == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
 		write(1, buf, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (Character != BUF_FLUSH)
+		buf[i++] = Character;
 	return (1);
 }

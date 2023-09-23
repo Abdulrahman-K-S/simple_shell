@@ -134,7 +134,7 @@ int _putsfd(char *str, int fd);
 /* string_functions.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
+char *_strstr(const char *, const char *);
 char *_strcat(char *, char *);
 
 /* string_functions2.c */
@@ -149,8 +149,8 @@ char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 
 /* string_functions4.c */
-char **strtow(char *, char *);
-char **strtow2(char *, char);
+char **_strtok(char *, char *);
+char **_strtok2(char *, char);
 
 /* memory_functions */
 char *_memset(char *, char, unsigned int);

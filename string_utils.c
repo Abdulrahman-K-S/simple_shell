@@ -6,70 +6,70 @@
  *
  * Return: integer length of string
  */
-int _strlen(char *s)
+int _strlen(char *Str)
 {
 	int i = 0;
 
-	if (!s)
+	if (!Str)
 		return (0);
 
-	while (*s++)
+	while (*Str++)
 		i++;
 	return (i);
 }
 
 /**
  * _strcmp - performs lexicogarphic comparison of two strangs.
- * @s1: the first strang
- * @s2: the second strang
+ * @Str1: the first strang
+ * @Str2: the second strang
  *
  * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
  */
-int _strcmp(char *s1, char *s2)
+int _strcmp(char *Str1, char *Str2)
 {
-	while (*s1 && *s2)
+	while (*Str1 && *Str2)
 	{
-		if (*s1 != *s2)
-			return (*s1 - *s2);
-		s1++;
-		s2++;
+		if (*Str1 != *Str2)
+			return (*Str1 - *Str2);
+		Str1++;
+		Str2++;
 	}
-	if (*s1 == *s2)
+	if (*Str1 == *Str2)
 		return (0);
 	else
-		return (*s1 < *s2 ? -1 : 1);
+		return (*Str1 < *Str2 ? -1 : 1);
 }
 
 /**
- * starts_with - checks if needle starts with haystack
- * @haystack: string to search
- * @needle: the substring to find
+ * _strstr - checks if needle starts with haystack
+ * @_String: string to search
+ * @_subString: the substring to find
  *
  * Return: address of next char of haystack or NULL
  */
-char *starts_with(const char *haystack, const char *needle)
+char *_strstr(const char *_String, const char *_subString)
 {
-	while (*needle)
-		if (*needle++ != *haystack++)
+	while (*_subString)
+		if (*_subString++ != *_String++)
 			return (NULL);
-	return ((char *)haystack);
+	return ((char *)_String);
 }
 
 /**
  * _strcat - concatenates two strings
- * @dest: the destination buffer
- * @src: the source buffer
+ * @Destination: the destination buffer
+ * @Source: the source buffer
  *
  * Return: pointer to destination buffer
  */
-char *_strcat(char *dest, char *src)
+char *_strcat(char *Destination, char *Source)
 {
-	char *ret = dest;
+	char *ret = Destination;
 
-	while (*dest)
-		dest++;
-	while (*src)
-		*dest++ = *src++;
-	*dest = *src;
+	while (*Destination)
+		Destination++;
+	while (*Source)
+		*Destination++ = *Source++;
+	*Destination = *Source;
 	return (ret);
 }

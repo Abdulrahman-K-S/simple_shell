@@ -7,17 +7,17 @@
  * Return: a pointer to an array of strings, or NULL on failure
  */
 
-char **strtow(char *str, char *d)
+char **_strtok(char *String, char *Delimiter)
 {
 	int i, j, k, m, numwords = 0;
 	char **s;
 
-	if (str == NULL || str[0] == 0)
+	if (String == NULL || String[0] == 0)
 		return (NULL);
-	if (!d)
-		d = " ";
-	for (i = 0; str[i] != '\0'; i++)
-		if (!is_delim(str[i], d) && (is_delim(str[i + 1], d) || !str[i + 1]))
+	if (!Delimiter)
+		Delimiter = " ";
+	for (i = 0; String[i] != '\0'; i++)
+		if (!is_delim(String[i], Delimiter) && (is_delim(String[i + 1], Delimiter) || !String[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
@@ -27,10 +27,10 @@ char **strtow(char *str, char *d)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (is_delim(str[i], d))
+		while (is_delim(String[i], Delimiter))
 			i++;
 		k = 0;
-		while (!is_delim(str[i + k], d) && str[i + k])
+		while (!is_delim(String[i + k], Delimiter) && String[i + k])
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
@@ -41,7 +41,7 @@ char **strtow(char *str, char *d)
 			return (NULL);
 		}
 		for (m = 0; m < k; m++)
-			s[j][m] = str[i++];
+			s[j][m] = String[i++];
 		s[j][m] = 0;
 	}
 	s[j] = NULL;
@@ -54,16 +54,16 @@ char **strtow(char *str, char *d)
  * @d: the delimeter
  * Return: a pointer to an array of strings, or NULL on failure
  */
-char **strtow2(char *str, char d)
+char **_strtok2(char *String, char Destination)
 {
 	int i, j, k, m, numwords = 0;
 	char **s;
 
-	if (str == NULL || str[0] == 0)
+	if (String == NULL || String[0] == 0)
 		return (NULL);
-	for (i = 0; str[i] != '\0'; i++)
-		if ((str[i] != d && str[i + 1] == d) ||
-		    (str[i] != d && !str[i + 1]) || str[i + 1] == d)
+	for (i = 0; String[i] != '\0'; i++)
+		if ((String[i] != Destination && String[i + 1] == Destination) ||
+		    (String[i] != Destination && !String[i + 1]) || String[i + 1] == Destination)
 			numwords++;
 	if (numwords == 0)
 		return (NULL);
@@ -72,10 +72,10 @@ char **strtow2(char *str, char d)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (str[i] == d && str[i] != d)
+		while (String[i] == Destination && String[i] != Destination)
 			i++;
 		k = 0;
-		while (str[i + k] != d && str[i + k] && str[i + k] != d)
+		while (String[i + k] != Destination && String[i + k] && String[i + k] != Destination)
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
@@ -86,7 +86,7 @@ char **strtow2(char *str, char d)
 			return (NULL);
 		}
 		for (m = 0; m < k; m++)
-			s[j][m] = str[i++];
+			s[j][m] = String[i++];
 		s[j][m] = 0;
 	}
 	s[j] = NULL;
