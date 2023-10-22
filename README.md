@@ -1,4 +1,7 @@
 # <p align='center'> simple_shell
+
+<br>
+
 ## AUTHORS
 This file lists all individuals who have contributed content to this repository.
 ## man_1_simple_shell
@@ -108,8 +111,15 @@ What our shell does not have to do:
 - Be able to move the cursor.
 
 
-<hr>
+<br>
+
+
+## Contributors
 
 Abdulrahman Khaled [Github](https://github.com/Bebo-K-S).
 
 Fadi Haddad [Github](https://github.com/fadirafik).
+
+<a href = "https://github.com/Bebo-K-S/simple_shell/graphs/contributors">
+   <img src = "https://contrib.rocks/image?repo=bebo-k-s/simple_shell"/>
+ </a>
